@@ -6,9 +6,9 @@ require_once '../vues/nav.php'
 ?>
 
 
-<div class="font-[sans-serif]">
-      <div class="text-center bg-gradient-to-r from-blue-800 to-blue-400 min-h-[160px] sm:p-6 p-4">
-        <h4 class="sm:text-3xl text-2xl font-bold text-white">Clinet Inscription</h4>
+<div class="">
+      <div class="text-center bg-gradient-to-r from-blue-800 to-blue-400 min-h-[160px] sm:p-6 p-4" style="backround:url('https://media.istockphoto.com/id/2057031002/photo/themis-is-goddess-of-justice-and-law.jpg?s=612x612&w=0&k=20&c=AZd4X_GFtXiOtFFmraUmx-hnqEuOMhAVUPHy_mqIRno=')">
+        <h4 class="sm:text-3xl text-2xl font-bold text-white"> Inscription Clinet</h4>
       </div>
 
       <div class="mx-4 mb-4 -mt-16">
