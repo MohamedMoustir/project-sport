@@ -20,7 +20,7 @@
 
 <header class='flex shadow-md  bg-[#282E3F] text-white  min-h-[30px] tracking-wide relative z-50'>
     <div class='flex flex-wrap items-center justify-between lg:gap-y-4 gap-y-6 gap-x-4 w-full'>
-      <a href="javascript:void(0)"><img src="../imgs/logo_white.png" alt="logo" class='w-36 ' />
+      <a href=""><img src="../imgs/logo_white.png" alt="logo" class='w-36 ' />
       </a>
   
       <div id="collapseMenu"
@@ -64,7 +64,7 @@
         <ul>
           <li id=" profile-dropdown-toggle"
             class=" relative px-1 after:absolute  after:w-full after:h-[2px] after:block after:top-8 after:left-0 after:transition-all after:duration-300">
-            <i class="fas fa-user bg-[#CA965C] p-[10px] rounded-full" aria-hidden="true"></i>
+            <a href="../vues/create_account.php"><i class="fas fa-user bg-[#CA965C] p-[10px] rounded-full" aria-hidden="true"></i></a>
             <div id=" profile-dropdown-menu"
               class="hidden bg-white block z-20 shadow-lg py-6 px-6 rounded sm:min-w-[320px] max-sm:min-w-[250px] absolute right-0 top-10">
               <h6 class="font-semibold text-[15px]">Welcome</h6>

@@ -2,24 +2,26 @@
 
 
 <?php
-require_once '../vues/nav.php'
+require_once '../vues/nav.php';
+// require_once "../module/listusers.php";
+
 ?>
 
 
-<div class="">
-      <div class="text-center bg-gradient-to-r from-blue-800 to-blue-400 min-h-[160px] sm:p-6 p-4" style="backround:url('https://media.istockphoto.com/id/2057031002/photo/themis-is-goddess-of-justice-and-law.jpg?s=612x612&w=0&k=20&c=AZd4X_GFtXiOtFFmraUmx-hnqEuOMhAVUPHy_mqIRno=')">
-        <h4 class="sm:text-3xl text-2xl font-bold text-white"> Inscription Clinet</h4>
+<div class="mb-[100px]">
+      <div class="text-center  min-h-[160px] sm:p-6 p-4" style="backround-image:url('../imgs/original.jpg')">
+        <h4 id ="Inscription" class="sm:text-3xl text-2xl font-bold text-white"> Inscription avocat</h4>
       </div>
 
       <div class="mx-4 mb-4 -mt-16">
-        <form class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md">
+        <form method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md" action="action.php?action=insertClient">
           <div class="grid md:grid-cols-2 gap-8">
-            <button type="button"
+            <button value="avocat" onclick="getvalue(this.value)" type="button"
               class="w-full px-6 py-3 flex items-center justify-center rounded-md text-gray-800 text-sm tracking-wider font-semibold border-none outline-none bg-gray-100 hover:bg-gray-200">
               <i class="fas fa-user-tie role-icon"></i>
               Vous êtes un avocat
             </button>
-            <button type="button"
+            <button value="utilisateur" onclick="getvalue(this.value)"  type="button"
               class="w-full px-6 py-3 flex items-center justify-center rounded-md text-white text-sm tracking-wider font-semibold border-none outline-none bg-black hover:bg-[#333]">
             <i class="fas fa-user-circle role-icon p-2"></i>
               Vous êtes un utilisateur
@@ -41,27 +43,27 @@ require_once '../vues/nav.php'
             </div>
             <div>
               <label class="text-gray-800 text-sm mb-2 block">age</label>
-              <input name="age" type="text" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter last name" />
+              <input name="age" type="number" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter last name" />
             </div>
             <div>
               <label class="text-gray-800 text-sm mb-2 block">Email </label>
               <input name="email" type="text" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter email" />
             </div>
             <div>
-              <label class="text-gray-800 text-sm mb-2 block">Mobile No.</label>
-              <input name="number" type="number" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter mobile number" />
-            </div>
-            <div>
-              <label class="text-gray-800 text-sm mb-2 block">matricule</label>
-              <input name="number" type="number" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter password" />
-            </div>
-            <div>
               <label class="text-gray-800 text-sm mb-2 block">password</label>
-              <input name="password" type="password" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter confirm password" />
+              <input name="password" type="text" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter confirm password" />
+            </div>
+            <div id="Mobile">
+              <label  class="text-gray-800 text-sm mb-2 block">Mobile No.</label>
+              <input  name="number" type="text" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter mobile number" />
+            </div>
+            <div id ="matricule">
+              <label class="text-gray-800 text-sm mb-2 block">matricule</label>
+              <input value="" name="matricule" type="number" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter password" />
             </div>
           </div>
           <div class="mt-8">
-            <button type="button" class="py-3 px-6 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none">
+            <button type="submit" class="py-3 px-6 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none">
             ENVOYER
             </button>
           </div>
@@ -72,6 +74,6 @@ require_once '../vues/nav.php'
     <?php
 include '../vues/footer.php';
 ?>
-
+<script src="../script/main.js" ></script>
 </body>
 </html>
