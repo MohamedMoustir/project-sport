@@ -1,10 +1,44 @@
 
 <?php
-require("../controlers/controlers.php");
-    require_once '../vues/nav.php';
-  if(isset($_POST['email']) || isset($_POST['password'])){
-    verifyUserAction($_POST['email'],$_POST['password']);
+    require_once "../database.php";
+   
+    ob_start();
+ 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_POST['password'])) {
+  $email = trim($_POST['email']);
+  $password = trim($_POST['password']);
+
+  if (empty($email) || empty($password)) {
+      echo "Please enter both email and password.";
+  } else {
+      try {
+          $stmt = $pdo->prepare("SELECT pass_word , matricule FROM users WHERE email = :email");
+          $stmt->execute(['email' => $email]);
+
+          $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+          if ($user) {
+              if (password_verify($password, $user->pass_word)) {
+                if ($user->smatricule > 0) {
+                 header('location:../vues/Account_avocat.php');
+                }
+              
+                 exit;
+              } else {
+                  echo "Incorrect password.";
+              }
+          } else {
+              echo "No user found with this email.";
+          }
+      } catch (PDOException $e) {
+          // echo "Error: " . $e->getMessage();
+      }
   }
+}
+
+ob_end_flush();
+require_once '../vues/nav.php';    
+
 ?>
 
 <div class="">
@@ -20,7 +54,8 @@ require("../controlers/controlers.php");
         </div>
 
         <div class="bg-white rounded-xl sm:px-6 px-4 py-8 max-w-md w-full h-max shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] max-lg:mx-auto">
-          <form  method="POST" action="action.php?action=login">
+        <form method="POST" action="">
+    
             <div class="mb-8">
               <h3 class="text-3xl font-extrabold text-gray-800">Sign in</h3>
             </div>
@@ -87,7 +122,7 @@ require("../controlers/controlers.php");
 
             <div class="mt-8">
               <button type="submit" class="w-full shadow-xl py-3 px-6 text-sm font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
-               Log in
+           Log in
               </button>
             </div>
             <p class="text-sm mt-8 text-center text-gray-800">Don't have an account <a href="javascript:void(0);" class="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap">Register here</a></p>

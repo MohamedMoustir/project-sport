@@ -2,9 +2,9 @@
 
 <?php
 require_once '../vues/nav.php';
-require("../controlers/controlers.php");
+require("../database.php");
 
-$ListAvocat = displayListAvocat();
+$ListAvocat = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecialite = specialite.idSP ')->fetchAll(PDO::FETCH_OBJ);
 
 ?>
 
@@ -46,7 +46,7 @@ $ListAvocat = displayListAvocat();
 
 
 
-<div class="p-4 my-[280px]">
+<div class="p-4 my-[280px]" id="reserv" >
       <div class="max-w-6xl max-lg:max-w-3xl max-sm:max-w-sm mx-auto">
         <div class="max-w-md mx-auto text-center">
         <i class="icofont-law text-[#CA965C] font-bold ">⚖️ AVOCAT MAROC</i>
@@ -61,13 +61,79 @@ $ListAvocat = displayListAvocat();
               <h3 class="text-lg font-bold text-[#CA965C] mb-3"><?= $list->full_name?></h3>
               <p class="text-gray-500 text-sm"><?= $list->label?></p>
               <p class="text-gray-800 text-[13px] font-semibold mt-4">Disponible</p>
-              <a href="javascript:void(0);" class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px]">Reserv</a>
+              <a onclick='showEditModal()'  href="javascript:void(0);" class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px]">Reserv</a>
             </div>
           </div>
           <?php endforeach;?>
           
     </div>
-
-    <?php
+<div>
+  <?php
 include '../vues/footer.php';
 ?>
+<div id='reservation_form'  class="hidden fixed top-0  left-[50%] -translate-x-2/4  z-500 max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="text-2xl py-4 px-6 bg-gray-900 text-white text-center font-bold uppercase">
+        Book an Appointment
+    </div>
+    <form class="py-4 px-6" action="" method="POST">
+        
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="email">
+                Email
+            </label>
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="email" type="email" placeholder="Enter your email">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="date">
+                Date
+            </label>
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="date" type="date" placeholder="Select a date">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="time">
+                Time
+            </label>
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="time" type="time" placeholder="Select a time">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="service">
+                Service
+            </label>
+            <select
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="service" name="service">
+                <option value="">Select a service</option>
+                <option value="haircut">Haircut</option>
+                <option value="coloring">Coloring</option>
+                <option value="styling">Styling</option>
+                <option value="facial">Facial</option>
+            </select>
+        </div>
+        
+        <div class="flex items-center justify-center mb-4">
+            <button 
+                class="bg-gray-900 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+                type="submit">
+                Book Appointment
+            </button>
+        </div>
+
+    </form>
+</div>
+</div>
+    
+<script>
+  function showEditModal() {
+    
+    document.getElementById("reservation_form").classList.toggle("hidden");
+   
+   
+}
+
+</script>

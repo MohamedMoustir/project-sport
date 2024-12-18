@@ -3,9 +3,63 @@
 
 <?php
 require_once '../vues/nav.php';
-require("../controlers/controlers.php");
-$Specialite = listspecialite();
+require_once '../database.php';
+
+$matricule = isset($_POST['matricule']) && $_POST['matricule'] !== '' ? $_POST['matricule'] : NULL;
+  $Specialite = isset($_POST['Specialite']) && $_POST['Specialite'] !== '' ? $_POST['Specialite'] : NULL;
+  
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+  if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+      echo "   .";
+      return;
+  }
+  if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+
+    $permited = array('jpg', 'png', 'jpeg', 'gif');
+    $file_name = $_FILES['avatar']['name'];
+    $file_size = $_FILES['avatar']['size'];
+    $file_temp = $_FILES['avatar']['tmp_name'];
+
+
+    $div = explode('.', $file_name);
+    $file_ext = strtolower(end($div));
+
+    if (in_array($file_ext, $permited)) {
+        $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
+        $upload_img = "upload/" . $unique_image;
+
+        if (move_uploaded_file($file_temp, $upload_img)) {
+            echo "";
+        } else {
+            echo "";
+            $upload_img = NULL; 
+        }
+    } else {
+        echo "";
+        $upload_img = NULL; 
+    }
+} else {
+    echo "";
+    $upload_img = NULL; 
+}
+
+  $password_ha = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+  $sqlusers = $pdo->prepare("INSERT INTO users (full_name, pass_word, age, email, matricule, numeroTelephone, idSpecialite,img) VALUES (?, ?, ?, ?, ?,?,?,?)");
+
+  $sqlusers->execute([$_POST['name'], $password_ha, $_POST['age'], $_POST['email'], $matricule, $_POST['number'], $Specialite,$upload_img]);
+
+
+
+}
+
+
+$Listusers = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
+
+
 ?>
+
 
 
 
@@ -15,7 +69,7 @@ $Specialite = listspecialite();
       </div>
 
       <div class="mx-4 mb-4 -mt-16">
-        <form method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md" action="action.php?action=insertClient">
+        <form method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md" action="" enctype="multipart/form-data">
           <div class="grid md:grid-cols-2 gap-8">
             <button name="avocat" value="avocat" onclick="getvalue(this.value)" type="button"
               class="w-full px-6 py-3 flex items-center justify-center rounded-md text-gray-800 text-sm tracking-wider font-semibold border-none outline-none bg-gray-100 hover:bg-gray-200">
@@ -41,6 +95,7 @@ $Specialite = listspecialite();
 
           <div class="grid md:grid-cols-2 gap-8">
             <div>
+              
               <label class="text-gray-800 text-sm mb-2 block">full name</label>
               <input name="name" type="text" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter name" />
             </div>
@@ -65,15 +120,22 @@ $Specialite = listspecialite();
               <input value="" name="matricule" type="number" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter password" />
             </div>
             <div >
+            <label class="text-gray-800 text-sm mb-2 block">Specialite</label>
               <select id="Special" name="Specialite"  class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all">
-              <option ></option>
-                <?php  foreach($Specialite as $list): ?>
-                <?php   echo "<option value=\"" . $list->idSP . "\">" . $list->label . "</option>"; ?>
-                <?php  endforeach;?>
+              <option></option>
+              <?php foreach($Listusers as $list): ?>
+             <option value="<?= $list->idSP ?>"><?= $list->label ?></option>
+        <?php endforeach; ?>
 
               </select>
             </div>
+            
+            <div id ="avatar">
+              <label for="avatar" class="text-gray-800 text-sm mb-2 block">imag</label>
+              <input  name="avatar" type="file" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter password" />
+            </div>
           </div>
+
           <div class="mt-8">
             <button type="submit" class="py-3 px-6 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none">
             ENVOYER
@@ -95,7 +157,7 @@ include '../vues/footer.php';
         document.getElementById("Inscription").textContent="Inscription utilisateur";
         document.getElementById("Special").style.display="none";
       
-
+        document.getElementById("role").value = "user"; 
        
 
     }else{
@@ -103,7 +165,7 @@ include '../vues/footer.php';
         document.getElementById("Mobile").style.display="block";
         document.getElementById("Inscription").textContent="Inscription avocat";
         document.getElementById("Special").style.display="block";
-
+        document.getElementById("role").value = "admin"; 
     }
 }
 </script>

@@ -25,3 +25,5 @@ function showEditModal() {
     document.getElementById("Cover").style.filter ="blur(4px)";
 
 }
+
+

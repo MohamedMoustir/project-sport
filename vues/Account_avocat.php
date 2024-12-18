@@ -1,11 +1,12 @@
 
 <?php
-require("../controlers/controlers.php");
-$listSpecialite = listusersAction();
+require("../database.php");
+require_once '../vues/nav.php';
+
+// $listSpecialite = listusersAction();
+$Listusers = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecialite = specialite.idSP ')->fetchAll(PDO::FETCH_OBJ);
 
 
-
-    require_once '../vues/nav.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +19,7 @@ $listSpecialite = listusersAction();
 <body>
 
    
-<?php  $list = end($listSpecialite); 
+<?php  $list = end($Listusers); 
         if ($list): ?>
 
 <section id="Cover" class="w-full overflow-hidden dark:bg-gray-900">
@@ -52,8 +53,19 @@ $listSpecialite = listusersAction();
             d="M437.02 74.98C388.668 26.63 324.379 0 256 0S123.332 26.629 74.98 74.98C26.63 123.332 0 187.621 0 256s26.629 132.668 74.98 181.02C123.332 485.37 187.621 512 256 512s132.668-26.629 181.02-74.98C485.37 388.668 512 324.379 512 256s-26.629-132.668-74.98-181.02zM111.105 429.297c8.454-72.735 70.989-128.89 144.895-128.89 38.96 0 75.598 15.179 103.156 42.734 23.281 23.285 37.965 53.687 41.742 86.152C361.641 462.172 311.094 482 256 482s-105.637-19.824-144.895-52.703zM256 269.507c-42.871 0-77.754-34.882-77.754-77.753C178.246 148.879 213.13 114 256 114s77.754 34.879 77.754 77.754c0 42.871-34.883 77.754-77.754 77.754zm170.719 134.427a175.9 175.9 0 0 0-46.352-82.004c-18.437-18.438-40.25-32.27-64.039-40.938 28.598-19.394 47.426-52.16 47.426-89.238C363.754 132.34 315.414 84 256 84s-107.754 48.34-107.754 107.754c0 37.098 18.844 69.875 47.465 89.266-21.887 7.976-42.14 20.308-59.566 36.542-25.235 23.5-42.758 53.465-50.883 86.348C50.852 364.242 30 312.512 30 256 30 131.383 131.383 30 256 30s226 101.383 226 226c0 56.523-20.86 108.266-55.281 147.934zm0 0"
             data-original="#000000" />
         </svg>
-        Profile
+        <a href="../vues/Account_avocat.php">Profil</a>
       </li>
+
+      <li class="text-gray-500 text-3xl">/</li>
+      <li class="text-gray-500 bg-gray-100 px-4 py-2 rounded-full text-sm tracking-wide font-bold cursor-pointer flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-current mr-2" viewBox="0 0 512 512">
+          <path
+            d="M437.02 74.98C388.668 26.63 324.379 0 256 0S123.332 26.629 74.98 74.98C26.63 123.332 0 187.621 0 256s26.629 132.668 74.98 181.02C123.332 485.37 187.621 512 256 512s132.668-26.629 181.02-74.98C485.37 388.668 512 324.379 512 256s-26.629-132.668-74.98-181.02zM111.105 429.297c8.454-72.735 70.989-128.89 144.895-128.89 38.96 0 75.598 15.179 103.156 42.734 23.281 23.285 37.965 53.687 41.742 86.152C361.641 462.172 311.094 482 256 482s-105.637-19.824-144.895-52.703zM256 269.507c-42.871 0-77.754-34.882-77.754-77.753C178.246 148.879 213.13 114 256 114s77.754 34.879 77.754 77.754c0 42.871-34.883 77.754-77.754 77.754zm170.719 134.427a175.9 175.9 0 0 0-46.352-82.004c-18.437-18.438-40.25-32.27-64.039-40.938 28.598-19.394 47.426-52.16 47.426-89.238C363.754 132.34 315.414 84 256 84s-107.754 48.34-107.754 107.754c0 37.098 18.844 69.875 47.465 89.266-21.887 7.976-42.14 20.308-59.566 36.542-25.235 23.5-42.758 53.465-50.883 86.348C50.852 364.242 30 312.512 30 256 30 131.383 131.383 30 256 30s226 101.383 226 226c0 56.523-20.86 108.266-55.281 147.934zm0 0"
+            data-original="#000000" />
+        </svg>
+       <a href="../vues/pageDisponible.php">Actionle</a>
+      </li>
+
       <li  class="text-gray-500 text-3xl" >/</li>
       <li  class="text-white bg-gray-700 px-4 py-2 rounded-full text-sm tracking-wide font-bold cursor-pointer flex items-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-current mr-2" viewBox="0 0 24 24">
@@ -72,71 +84,49 @@ $listSpecialite = listusersAction();
       </li>
     </ul>
         </div>
-     
-        <div
-            class="xl:w-[80%] lg:w-[90%]  md:w-[90%] sm:w-[92%] xs:w-[90%] mx-auto flex flex-col gap-4 items-center relative lg:-top-8 md:-top-6 sm:-top-4 xs:-top-4">
-            <!-- Description -->
-            <p class="w-fit text-gray-700 dark:text-gray-400 text-md"><?= $list->biography ?></p>
-
-
-            <!-- Detail -->
-            <div class="w-full my-auto py-6 flex flex-col justify-center gap-2">
-                <div class="w-full flex sm:flex-row xs:flex-col gap-2 justify-center">
-                    <div class="w-full">
-                        <dl class="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
-                            <div class="flex flex-col pb-3">
-                                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">FullName</dt>
-                                <dd class="text-lg "><?= $list->full_name?></dd>
-                            </div>
-                            <div class="flex flex-col py-3">
-                                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">specialité</dt>
-                                <dd class="text-lg "></dd>
-                            </div>
-                            <div class="flex flex-col py-3">
-                                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Matricule</dt>
-                                <dd class="text-lg "><?= $list->matricule ?></dd>
-                            </div>
-                            <div class="flex flex-col py-3">
-                                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">age</dt>
-                                <dd class="text-lg "><?= $list->age ?></dd>
-                            </div>
-                        </dl>
+        <div id="wrapper" class="max-w-xl  mx-auto">
+            <div class="sm:grid sm:h-32 sm:grid-flow-row sm:gap-4 sm:grid-cols-3">
+                <div id="jh-stats-positive" class="flex flex-col justify-center px-4 py-4 bg-white border border-gray-300 rounded">
+                    <div>
+                        <div>
+                            <p class="flex items-center justify-end text-green-500 text-md">
+                                <span class="font-bold">6%</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path class="heroicon-ui" d="M20 15a1 1 0 002 0V7a1 1 0 00-1-1h-8a1 1 0 000 2h5.59L13 13.59l-3.3-3.3a1 1 0 00-1.4 0l-6 6a1 1 0 001.4 1.42L9 12.4l3.3 3.3a1 1 0 001.4 0L20 9.4V15z"/></svg>
+                            </p>
+                        </div>
+                        <p class="text-3xl font-semibold text-center text-gray-800">43</p>
+                        <p class="text-lg text-center text-gray-500">New Tickets</p>
                     </div>
-                    <div class="w-full">
-                        <dl class="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
-
-                            <div class="flex flex-col pt-3">
-                                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Phone Number</dt>
-                                <dd class="text-lg "><?= $list->numeroTelephone ?></dd>
-                            </div>
-                            <div class="flex flex-col pt-3">
-                                <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Email</dt>
-                                <dd class="text-lg "><?= $list->email ?></dd>
-                            </div>
-
-                               <div>
-                                <button type="submite"><a href="../vues/Account_avocat.php?edite=<?php echo $list->id; ?>">Edite</a></button>
-                               </div>
-                        </dl>
+                </div>
+    
+                <div id="jh-stats-negative" class="flex flex-col justify-center px-4 py-4 mt-4 bg-white border border-gray-300 rounded sm:mt-0">
+                    <div>
+                        <div>
+                            <p class="flex items-center justify-end text-red-500 text-md">
+                                <span class="font-bold">6%</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path class="heroicon-ui" d="M20 9a1 1 0 012 0v8a1 1 0 01-1 1h-8a1 1 0 010-2h5.59L13 10.41l-3.3 3.3a1 1 0 01-1.4 0l-6-6a1 1 0 011.4-1.42L9 11.6l3.3-3.3a1 1 0 011.4 0l6.3 6.3V9z"/></svg>
+                            </p>
+                        </div>
+                        <p class="text-3xl font-semibold text-center text-gray-800">43</p>
+                        <p class="text-lg text-center text-gray-500">New Tickets</p>
                     </div>
-                   
                 </div>
-                
-                <div class="my-10 lg:w-[70%] md:h-[14rem] xs:w-full xs:h-[10rem]">
-                    <!--  -->
-                    <h1
-                        class="w-fit font-serif my-4 pb-1 pr-2 rounded-b-md border-b-4 border-blue-600 dark:border-b-4 dark:border-yellow-600 dark:text-white lg:text-4xl md:text-3xl xs:text-xl">
-                        My Location</h1>
 
-                    <!-- Location -->
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d252230.02028974562!2d38.613328040215286!3d8.963479542403238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85cef5ab402d%3A0x8467b6b037a24d49!2sAddis%20Ababa!5e0!3m2!1sen!2set!4v1710567234587!5m2!1sen!2set"
-                        class="rounded-lg w-full h-full" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
-
+                <div id="jh-stats-neutral" class="flex flex-col justify-center px-4 py-4 mt-4 bg-white border border-gray-300 rounded sm:mt-0">
+                    <div>
+                        <div>
+                            <p class="flex items-center justify-end text-gray-500 text-md">
+                                <span class="font-bold">0%</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path class="heroicon-ui" d="M17 11a1 1 0 010 2H7a1 1 0 010-2h10z"/></svg>
+                            </p>
+                        </div>
+                        <p class="text-3xl font-semibold text-center text-gray-800">43</p>
+                        <p class="text-lg text-center text-gray-500">New Tickets</p>
+                    </div>
                 </div>
-                
             </div>
+        </div>
+
 
             <!-- Social Links -->
             <div
@@ -192,6 +182,57 @@ $listSpecialite = listusersAction();
 
         </div>
     </div>
+        <div
+            class="xl:w-[80%] lg:w-[90%]  md:w-[90%] sm:w-[92%] xs:w-[90%] mx-auto flex flex-col gap-4 items-center relative lg:-top-8 md:-top-6 sm:-top-4 xs:-top-4">
+            <!-- Description -->
+            <p class="w-fit text-gray-700 dark:text-gray-400 text-md"><?= $list->biography ?></p>
+
+
+            <!-- Detail -->
+            <div class="w-full my-auto py-6 flex flex-col justify-center gap-6">
+    <!-- Personal Info Section -->
+    <div class="w-full flex sm:flex-row xs:flex-col gap-4 justify-center">
+        <!-- Left Column -->
+        <div class="w-full bg-white p-6 shadow-lg rounded-lg">
+            <dl class="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
+                <div class="flex flex-col pb-4">
+                    <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Full Name</dt>
+                    <dd class="text-xl font-semibold"><?= $list->full_name ?></dd>
+                </div>
+                <div class="flex flex-col py-4">
+                    <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Speciality</dt>
+                    
+                    <dd class="text-xl font-semibold"><?= $list->label?></dd>
+                  
+
+                </div>
+                <div class="flex flex-col py-4">
+                    <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Matricule</dt>
+                    <dd class="text-xl font-semibold"><?= $list->matricule ?></dd>
+                </div>
+                <div class="flex flex-col py-4">
+                    <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Age</dt>
+                    <dd class="text-xl font-semibold"><?= $list->age ?></dd>
+                </div>
+            </dl>
+        </div>
+
+        <!-- Right Column -->
+        <div class="w-full bg-white p-6 shadow-lg rounded-lg">
+            <dl class="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
+                <div class="flex flex-col pt-4">
+                    <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Phone Number</dt>
+                    <dd class="text-xl font-semibold"><?= $list->numeroTelephone ?></dd>
+                </div>
+                <div class="flex flex-col pt-4">
+                    <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Email</dt>
+                    <dd class="text-xl font-semibold"><?= $list->email ?></dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+   
 </section>
 
 <section>
@@ -209,7 +250,7 @@ $listSpecialite = listusersAction();
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">specialité</label>
-            <input value="<?= $list->specialite ?>" name="specialité" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter last name" />
+            <input value="<?= $list->label ?>" name="specialité" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter last name" />
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Email Id</label>
@@ -217,29 +258,26 @@ $listSpecialite = listusersAction();
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Mobile No.</label>
-            <input value="<?= $list->number ?>" name="number" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter mobile number" />
+            <input value="<?= $list->numeroTelephone ?>" name="number" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter mobile number" />
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">image</label>
             <input name="file" type="file" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter password" />
           </div>
+         
           <div>
-            <label class="text-gray-800 text-sm mb-2 block">matricule</label>
-            <input value="<?= $list->matricule ?>" name="matricule" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter confirm password" />
-          </div>
-          <div>
-            <label class="text-gray-800 text-sm mb-2 block">matricule</label>
-            <textarea value="<?= $list->matricule ?>" name="matricule" type="matricule" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter confirm password" ></textarea>
+            <label class="text-gray-800 text-sm mb-2 block">biography</label>
+            <textarea value="<?= $list->biography ?>" name="biography" type="matricule" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter confirm password" ></textarea>
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Age</label>
-            <input name="age" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter confirm password" />
+            <input value="<?= $list->age ?>" name="age" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter confirm password" />
           </div>
         </div>
         
         <div class="!mt-12">
           <button type="button" class="py-3.5 px-7 text-sm  tracking-wider rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
-           Eidite
+           Edite
           </button>
         </div>
       </form>

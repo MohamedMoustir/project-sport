@@ -1,3 +1,5 @@
+<?php?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +20,9 @@
 
 <body class="font-montserrat">
 
-<header class='flex shadow-md  bg-[#282E3F] text-white  min-h-[30px] tracking-wide relative z-50'>
+<header class='flex shadow-md  bg-[#282E3F] text-white   relative z-50'>
     <div class='flex flex-wrap items-center justify-between lg:gap-y-4 gap-y-6 gap-x-4 w-full'>
-      <a href=""><img src="../imgs/logo_white.png" alt="logo" class='w-36 ' />
+      <a href=""><img src="../imgs/logo_white.png" alt="logo" class='w-6 ' />
       </a>
   
       <div id="collapseMenu"
@@ -100,3 +102,5 @@
       </div>
     </div>
   </header>
+
+    <script src="../script/main.js" ></script>
