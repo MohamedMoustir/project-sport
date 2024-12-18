@@ -6,7 +6,11 @@ function listusersAction(){
     return $listSpecialite;
     require_once "../vues/Account_avocat.php";
 }
-
+function listspecialiteAction(){
+    $Specialite = listspecialite();
+    return  $Specialite;
+    require_once "../vues/create_account.php";
+}
 function insertAction(){
     
     $inserted = InsertUsers();
@@ -20,11 +24,11 @@ function insertAction(){
 }
 
 function verifyUserAction($email, $password){
-   
     $inserte = verifyUser($email, $password);
    
     if ($inserte) {
-        header('location:../vues/Account_avocat.php');
+        header('localhost:../vues/Account_avocat.php');
+        exit();
     } else {
        
     } 

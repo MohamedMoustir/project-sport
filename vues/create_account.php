@@ -3,9 +3,10 @@
 
 <?php
 require_once '../vues/nav.php';
-// require_once "../module/listusers.php";
-
+require("../controlers/controlers.php");
+$Specialite = listspecialite();
 ?>
+
 
 
 <div class="mb-[100px]">
@@ -16,16 +17,18 @@ require_once '../vues/nav.php';
       <div class="mx-4 mb-4 -mt-16">
         <form method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md" action="action.php?action=insertClient">
           <div class="grid md:grid-cols-2 gap-8">
-            <button value="avocat" onclick="getvalue(this.value)" type="button"
+            <button name="avocat" value="avocat" onclick="getvalue(this.value)" type="button"
               class="w-full px-6 py-3 flex items-center justify-center rounded-md text-gray-800 text-sm tracking-wider font-semibold border-none outline-none bg-gray-100 hover:bg-gray-200">
               <i class="fas fa-user-tie role-icon"></i>
               Vous êtes un avocat
             </button>
-            <button value="utilisateur" onclick="getvalue(this.value)"  type="button"
+            <button name="utilisateur" value="utilisateur" onclick="getvalue(this.value)"  type="button"
               class="w-full px-6 py-3 flex items-center justify-center rounded-md text-white text-sm tracking-wider font-semibold border-none outline-none bg-black hover:bg-[#333]">
             <i class="fas fa-user-circle role-icon p-2"></i>
               Vous êtes un utilisateur
             </button>
+            <input type="hidden" name="selected_role" id="selected_role">
+        <button type="submit" class="hidden">Submit</button>
           </div>
 
           <div
@@ -51,7 +54,7 @@ require_once '../vues/nav.php';
             </div>
             <div>
               <label class="text-gray-800 text-sm mb-2 block">password</label>
-              <input name="password" type="text" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter confirm password" />
+              <input name="password" type="password" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter confirm password" />
             </div>
             <div id="Mobile">
               <label  class="text-gray-800 text-sm mb-2 block">Mobile No.</label>
@@ -60,6 +63,15 @@ require_once '../vues/nav.php';
             <div id ="matricule">
               <label class="text-gray-800 text-sm mb-2 block">matricule</label>
               <input value="" name="matricule" type="number" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter password" />
+            </div>
+            <div >
+              <select id="Special" name="Specialite"  class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all">
+              <option ></option>
+                <?php  foreach($Specialite as $list): ?>
+                <?php   echo "<option value=\"" . $list->idSP . "\">" . $list->label . "</option>"; ?>
+                <?php  endforeach;?>
+
+              </select>
             </div>
           </div>
           <div class="mt-8">
@@ -75,5 +87,25 @@ require_once '../vues/nav.php';
 include '../vues/footer.php';
 ?>
 <script src="../script/main.js" ></script>
+<script>
+  function getvalue(value){
+    if (value == "utilisateur") {
+        document.getElementById("matricule").style.display="none";
+        document.getElementById("Mobile").style.display="none";
+        document.getElementById("Inscription").textContent="Inscription utilisateur";
+        document.getElementById("Special").style.display="none";
+      
+
+       
+
+    }else{
+        document.getElementById("matricule").style.display="block";
+        document.getElementById("Mobile").style.display="block";
+        document.getElementById("Inscription").textContent="Inscription avocat";
+        document.getElementById("Special").style.display="block";
+
+    }
+}
+</script>
 </body>
 </html>

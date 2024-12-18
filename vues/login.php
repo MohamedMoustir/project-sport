@@ -2,7 +2,9 @@
 <?php
 require("../controlers/controlers.php");
     require_once '../vues/nav.php';
+  if(isset($_POST['email']) || isset($_POST['password'])){
     verifyUserAction($_POST['email'],$_POST['password']);
+  }
 ?>
 
 <div class="">
@@ -18,7 +20,7 @@ require("../controlers/controlers.php");
         </div>
 
         <div class="bg-white rounded-xl sm:px-6 px-4 py-8 max-w-md w-full h-max shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] max-lg:mx-auto">
-          <form  method="GET" action="../vues/Account_avocat.php">
+          <form  method="POST" action="action.php?action=login">
             <div class="mb-8">
               <h3 class="text-3xl font-extrabold text-gray-800">Sign in</h3>
             </div>
@@ -61,7 +63,7 @@ require("../controlers/controlers.php");
             <div>
               <label class="text-gray-800 text-sm mb-2 block">email</label>
               <div class="relative flex items-center">
-                <input name="email" type="text" required class="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter user name" />
+                <input name="email" type="email" required class="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-md outline-blue-600" placeholder="Enter user name" />
                 <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" class="w-[18px] h-[18px] absolute right-4" viewBox="0 0 24 24">
                   <circle cx="10" cy="7" r="6" data-original="#000000"></circle>
                   <path d="M14 15H6a5 5 0 0 0-5 5 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 5 5 0 0 0-5-5zm8-4h-2.59l.3-.29a1 1 0 0 0-1.42-1.42l-2 2a1 1 0 0 0 0 1.42l2 2a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42l-.3-.29H22a1 1 0 0 0 0-2z" data-original="#000000"></path>

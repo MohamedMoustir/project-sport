@@ -5,13 +5,16 @@ function getvalue(value){
         document.getElementById("matricule").style.display="none";
         document.getElementById("Mobile").style.display="none";
         document.getElementById("Inscription").textContent="Inscription utilisateur";
-        document.getElementById("matricule").value="";
+        document.getElementById("Special").style.display="none";
+        document.getElementById("Special").style.background="red";
+
        
 
     }else{
         document.getElementById("matricule").style.display="block";
         document.getElementById("Mobile").style.display="block";
         document.getElementById("Inscription").textContent="Inscription avocat";
+        document.getElementById("Specialite").style.display="block";
 
     }
 }

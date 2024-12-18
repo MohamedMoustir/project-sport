@@ -115,7 +115,7 @@ $listSpecialite = listusersAction();
                             </div>
 
                                <div>
-                                <button type="submite"><a href=>Edite</a></button>
+                                <button type="submite"><a href="../vues/Account_avocat.php?edite=<?php echo $list->id; ?>">Edite</a></button>
                                </div>
                         </dl>
                     </div>
@@ -201,7 +201,7 @@ $listSpecialite = listusersAction();
         <h4 class="text-gray-800 text-base  mt-6">Sign up into your account</h4>
       </div>
 
-      <form>
+      <form method="POST" action="action.php?action=edite">
         <div class="grid sm:grid-cols-2 gap-8">
           <div>
             <label class="text-gray-800 text-sm mb-2 block">FullName</label>
@@ -209,15 +209,15 @@ $listSpecialite = listusersAction();
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">specialité</label>
-            <input name="specialité" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter last name" />
+            <input value="<?= $list->specialite ?>" name="specialité" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter last name" />
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Email Id</label>
-            <input name="email" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter email" />
+            <input value="<?= $list->email ?>" name="email" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter email" />
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Mobile No.</label>
-            <input name="number" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter mobile number" />
+            <input value="<?= $list->number ?>" name="number" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter mobile number" />
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">image</label>
@@ -225,11 +225,11 @@ $listSpecialite = listusersAction();
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">matricule</label>
-            <input name="matricule" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter confirm password" />
+            <input value="<?= $list->matricule ?>" name="matricule" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter confirm password" />
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">matricule</label>
-            <textarea name="matricule" type="matricule" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter confirm password" ></textarea>
+            <textarea value="<?= $list->matricule ?>" name="matricule" type="matricule" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter confirm password" ></textarea>
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Age</label>

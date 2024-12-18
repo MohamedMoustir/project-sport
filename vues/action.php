@@ -6,12 +6,15 @@ require_once("../controlers/controlers.php");
 switch ($action = $_GET["action"]) {
     case 'insertClient':
         insertAction();
+        header("location:../vues/login.php");
         break;
-    case 'verify':
+    case 'login':
+      header("location:../vues/Account_avocat.php");
+        $email = $_POST["email"];
+        $password = $_POST["email"];
         
-      verifyUserAction();
-      header('localhost:../vues/Account_avocat.php');
-        break;
+      verifyUserAction($email,$password);
+      
             
     }
   
