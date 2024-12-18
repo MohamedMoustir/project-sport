@@ -2,6 +2,10 @@
 
 <?php
 require_once '../vues/nav.php';
+require("../controlers/controlers.php");
+
+$ListAvocat = displayListAvocat();
+
 ?>
 
 
@@ -49,62 +53,19 @@ require_once '../vues/nav.php';
           <h2 class="text-3xl font-extrabold text-gray-800 mb-12 text-center leading-10">Dans toutes les spécialités</h2>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-sm:gap-8">
+          
+        <?php foreach($ListAvocat as $list) :?>
           <div class="bg-white rounded overflow-hidden">
             <img src="https://images.pexels.com/photos/5673485/pexels-photo-5673485.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Blog Post 1" class="w-full h-52 object-cover" />
             <div class="p-6">
-              <h3 class="text-lg font-bold text-[#CA965C] mb-3">Victor ERLICH</h3>
-              <p class="text-gray-500 text-sm">AVOCAT PROFESSIONNEL</p>
+              <h3 class="text-lg font-bold text-[#CA965C] mb-3"><?= $list->full_name?></h3>
+              <p class="text-gray-500 text-sm"><?= $list->label?></p>
               <p class="text-gray-800 text-[13px] font-semibold mt-4">Disponible</p>
               <a href="javascript:void(0);" class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px]">Reserv</a>
             </div>
           </div>
-          <div class="bg-white rounded overflow-hidden">
-            <img src="https://images.pexels.com/photos/5673485/pexels-photo-5673485.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Blog Post 1" class="w-full h-52 object-cover" />
-            <div class="p-6">
-              <h3 class="text-lg font-bold text-[#CA965C] mb-3">Victor ERLICH</h3>
-              <p class="text-gray-500 text-sm">AVOCAT PROFESSIONNEL</p>
-              <p class="text-gray-800 text-[13px] font-semibold mt-4">Disponible</p>
-              <a href="javascript:void(0);" class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px]">Reserv</a>
-            </div>
-          </div>
-          <div class="bg-white rounded overflow-hidden">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSssZn58M0AImpyD8m6W2wgqd580HPzxhlOAg&s" alt="Blog Post 1" class="w-full h-52 object-cover" />
-            <div class="p-6">
-              <h3 class="text-lg font-bold text-[#CA965C] mb-3">Victor ERLICH</h3>
-              <p class="text-gray-500 text-sm">AVOCAT PROFESSIONNEL</p>
-              <p class="text-gray-800 text-[13px] font-semibold mt-4">Disponible</p>
-              <a href="javascript:void(0);" class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px]">Reserv</a>
-            </div>
-          </div>
-          <div class="bg-white rounded overflow-hidden">
-            <img src="https://images.pexels.com/photos/5673485/pexels-photo-5673485.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Blog Post 1" class="w-full h-52 object-cover" />
-            <div class="p-6">
-              <h3 class="text-lg font-bold text-[#CA965C] mb-3">Victor ERLICH</h3>
-              <p class="text-gray-500 text-sm">AVOCAT PROFESSIONNEL</p>
-              <p class="text-gray-800 text-[13px] font-semibold mt-4">Disponible</p>
-              <a href="javascript:void(0);" class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px]">Reserv</a>
-            </div>
-          </div>
-          <div class="bg-white rounded overflow-hidden">
-            <img src="https://images.pexels.com/photos/5673485/pexels-photo-5673485.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Blog Post 1" class="w-full h-52 object-cover" />
-            <div class="p-6">
-              <h3 class="text-lg font-bold text-[#CA965C] mb-3">Victor ERLICH</h3>
-              <p class="text-gray-500 text-sm">AVOCAT PROFESSIONNEL</p>
-              <p class="text-gray-800 text-[13px] font-semibold mt-4">Disponible</p>
-              <a href="javascript:void(0);" class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px]">Reserv</a>
-            </div>
-          </div>
-          <div class="bg-white rounded overflow-hidden">
-            <img src="https://images.pexels.com/photos/5673485/pexels-photo-5673485.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Blog Post 1" class="w-full h-52 object-cover" />
-            <div class="p-6">
-              <h3 class="text-lg font-bold text-[#CA965C] mb-3">Victor ERLICH</h3>
-              <p class="text-gray-500 text-sm">AVOCAT PROFESSIONNEL</p>
-              <p class="text-gray-800 text-[13px] font-semibold mt-4">Disponible</p>
-              <a href="javascript:void(0);" class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px]">Reserv</a>
-            </div>
-          </div>
-        </div>
-      </div>
+          <?php endforeach;?>
+          
     </div>
 
     <?php

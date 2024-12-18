@@ -34,7 +34,6 @@ function Listusers(){
     $sqlusers->execute([$_POST['name'],$password_ha,$_POST['age'],$_POST['email'],$matricule,$_POST['number'],$Specialite]);
 
     }
-
  
     function verifyUser($email, $password) {
         $pdo = connection();
@@ -89,5 +88,11 @@ function Listusers(){
             echo "حدث خطأ أثناء التحديث.";
         }
     }
+    
+    function displayListAvocat(){
+        $pdo = connection();
+        $ListAvocat = $pdo->query('SELECT users.full_name, specialite.label FROM users JOIN specialite on users.idSpecialite = specialite.idSP ')->fetchAll(PDO::FETCH_OBJ);
+        return $ListAvocat;
+        }
     
 ?>

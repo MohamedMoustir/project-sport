@@ -33,4 +33,9 @@ function verifyUserAction($email, $password){
        
     } 
 }
+function displayListAvocatAction(){
+    $ListAvocat = displayListAvocat();
+    return $ListAvocat;
+    require_once "../vues/Account_avocat.php";
+}
 ?>
