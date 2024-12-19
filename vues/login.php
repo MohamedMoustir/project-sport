@@ -2,7 +2,7 @@
 <?php
     require_once "../database.php";
    
-    ob_start();
+    // ob_start();
  
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_POST['password'])) {
   $email = trim($_POST['email']);
@@ -19,11 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
 
           if ($user) {
               if (password_verify($password, $user->pass_word)) {
-                if ($user->smatricule > 0) {
-                 header('location:../vues/Account_avocat.php');
-                }
-              
-                 exit;
+                
+                header('Location: ../vues/Account_avocat.php?email=' . $_POST['email']);
+                     exit();
+
+                
               } else {
                   echo "Incorrect password.";
               }

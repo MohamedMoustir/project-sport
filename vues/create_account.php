@@ -1,6 +1,4 @@
 
-
-
 <?php
 require_once '../vues/nav.php';
 require_once '../database.php';
@@ -30,19 +28,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $upload_img = "upload/" . $unique_image;
 
         if (move_uploaded_file($file_temp, $upload_img)) {
-            echo "";
+           
         } else {
-            echo "";
+            echo "sssssssssss";
             $upload_img = NULL; 
         }
     } else {
-        echo "";
+        echo "ssssssssss";
         $upload_img = NULL; 
     }
 } else {
-    echo "";
+    echo "ssssssssssss";
     $upload_img = NULL; 
 }
+
 
   $password_ha = password_hash($_POST['password'], PASSWORD_DEFAULT);
 

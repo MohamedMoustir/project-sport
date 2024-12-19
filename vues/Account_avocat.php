@@ -1,12 +1,55 @@
 
 <?php
 require("../database.php");
-require_once '../vues/nav.php';
+require_once "../vues/Admin_Panel.php";
+if (isset($_GET['email'])) {
+$email = $_GET['email'];
 
-// $listSpecialite = listusersAction();
-$Listusers = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecialite = specialite.idSP ')->fetchAll(PDO::FETCH_OBJ);
+
+$query = $pdo->prepare('SELECT * FROM users 
+                        JOIN specialite ON users.idSpecialite = specialite.idSP  
+                        WHERE email = :email');
+$query->bindParam(':email', $email, PDO::PARAM_STR);  
+$query->execute();
+
+$Listusers = $query->fetchAll(PDO::FETCH_OBJ);
 
 
+} else {
+    echo "Email parameter is missing.";
+}
+// edite
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $full_name = $_POST['full_name'] ?? null;
+    $number = $_POST['number'] ?? null;
+    $biography = $_POST['biography'] ?? null;
+    $age = $_POST['age'] ?? null;
+    $email =$_GET['email'];
+
+    $edite = $pdo->prepare("UPDATE users 
+    SET full_name = :full_name, 
+        numeroTelephone = :numeroTelephone, 
+        biography = :biography, 
+        age = :age 
+    WHERE email = :email");
+
+$edite->bindParam(':full_name', $full_name, PDO::PARAM_STR);
+$edite->bindParam(':numeroTelephone', $number, PDO::PARAM_INT);
+$edite->bindParam(':biography', $biography, PDO::PARAM_STR);
+$edite->bindParam(':age', $age, PDO::PARAM_INT); 
+$edite->bindParam(':email', $email, PDO::PARAM_STR);
+
+if ($edite->execute()) {
+    echo "info is done";
+} else {
+    echo "info is not done";
+}
+
+}
+
+    $Listsp = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,246 +62,160 @@ $Listusers = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecial
 <body>
 
    
-<?php  $list = end($Listusers); 
-        if ($list): ?>
+<?php  foreach($Listusers as $list): ?>
 
-<section id="Cover" class="w-full overflow-hidden dark:bg-gray-900">
-    <div class="flex flex-col">
-        <!-- Cover Image -->
-        <img src="../imgs/original.jpg" alt="User Cover"
-                class="w-full xl:h-[20rem] lg:h-[18rem] md:h-[16rem] sm:h-[14rem] xs:h-[11rem]" />
+    <body class="font-sans antialiased text-gray-900 leading-normal tracking-wider bg-cover"
+    style="background-image:url('https://source.unsplash.com/1L71sPT5XKc');">
 
-        <!-- Profile Image -->
-        <div class="sm:w-[80%] xs:w-[90%] mx-auto flex">
-            <img src="<?= $list->img?>" alt="User Profile"
-                    class="rounded-full lg:w-[12rem] lg:h-[12rem] md:w-[10rem] md:h-[10rem] sm:w-[8rem] sm:h-[8rem] xs:w-[7rem] xs:h-[7rem] outline outline-2 outline-offset-2 outline-blue-500 relative lg:bottom-[5rem] sm:bottom-[4rem] xs:bottom-[3rem]" />
 
-            <!-- FullName -->
-            <h1
-                class="w-full text-left my-4 sm:mx-4 xs:pl-4 text-gray-800 dark:text-white lg:text-4xl md:text-3xl sm:text-3xl xs:text-xl font-serif">
-                Samuel Abera</h1>
-    <ul class="relative -top-[60px] flex items-center justify-center space-x-4 font-[sans-serif] mt-4">
-      <li class="text-gray-500 bg-gray-100 px-4 py-2 rounded-full text-sm tracking-wide font-bold cursor-pointer flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-current mr-2" viewBox="0 0 511 511.999">
-          <path
-            d="M498.7 222.695c-.016-.011-.028-.027-.04-.039L289.805 13.81C280.902 4.902 269.066 0 256.477 0c-12.59 0-24.426 4.902-33.332 13.809L14.398 222.55c-.07.07-.144.144-.21.215-18.282 18.386-18.25 48.218.09 66.558 8.378 8.383 19.44 13.235 31.273 13.746.484.047.969.07 1.457.07h8.32v153.696c0 30.418 24.75 55.164 55.168 55.164h81.711c8.285 0 15-6.719 15-15V376.5c0-13.879 11.293-25.168 25.172-25.168h48.195c13.88 0 25.168 11.29 25.168 25.168V497c0 8.281 6.715 15 15 15h81.711c30.422 0 55.168-24.746 55.168-55.164V303.14h7.719c12.586 0 24.422-4.903 33.332-13.813 18.36-18.367 18.367-48.254.027-66.633zm-21.243 45.422a17.03 17.03 0 0 1-12.117 5.024h-22.72c-8.285 0-15 6.714-15 15v168.695c0 13.875-11.289 25.164-25.168 25.164h-66.71V376.5c0-30.418-24.747-55.168-55.169-55.168H232.38c-30.422 0-55.172 24.75-55.172 55.168V482h-66.71c-13.876 0-25.169-11.29-25.169-25.164V288.14c0-8.286-6.715-15-15-15H48a13.9 13.9 0 0 0-.703-.032c-4.469-.078-8.66-1.851-11.8-4.996-6.68-6.68-6.68-17.55 0-24.234.003 0 .003-.004.007-.008l.012-.012L244.363 35.02A17.003 17.003 0 0 1 256.477 30c4.574 0 8.875 1.781 12.113 5.02l208.8 208.796.098.094c6.645 6.692 6.633 17.54-.031 24.207zm0 0"
-            data-original="#000000" />
-        </svg>
-        Home
-      </li>
-      <li class="text-gray-500 text-3xl">/</li>
-      <li class="text-gray-500 bg-gray-100 px-4 py-2 rounded-full text-sm tracking-wide font-bold cursor-pointer flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-current mr-2" viewBox="0 0 512 512">
-          <path
-            d="M437.02 74.98C388.668 26.63 324.379 0 256 0S123.332 26.629 74.98 74.98C26.63 123.332 0 187.621 0 256s26.629 132.668 74.98 181.02C123.332 485.37 187.621 512 256 512s132.668-26.629 181.02-74.98C485.37 388.668 512 324.379 512 256s-26.629-132.668-74.98-181.02zM111.105 429.297c8.454-72.735 70.989-128.89 144.895-128.89 38.96 0 75.598 15.179 103.156 42.734 23.281 23.285 37.965 53.687 41.742 86.152C361.641 462.172 311.094 482 256 482s-105.637-19.824-144.895-52.703zM256 269.507c-42.871 0-77.754-34.882-77.754-77.753C178.246 148.879 213.13 114 256 114s77.754 34.879 77.754 77.754c0 42.871-34.883 77.754-77.754 77.754zm170.719 134.427a175.9 175.9 0 0 0-46.352-82.004c-18.437-18.438-40.25-32.27-64.039-40.938 28.598-19.394 47.426-52.16 47.426-89.238C363.754 132.34 315.414 84 256 84s-107.754 48.34-107.754 107.754c0 37.098 18.844 69.875 47.465 89.266-21.887 7.976-42.14 20.308-59.566 36.542-25.235 23.5-42.758 53.465-50.883 86.348C50.852 364.242 30 312.512 30 256 30 131.383 131.383 30 256 30s226 101.383 226 226c0 56.523-20.86 108.266-55.281 147.934zm0 0"
-            data-original="#000000" />
-        </svg>
-        <a href="../vues/Account_avocat.php">Profil</a>
-      </li>
 
-      <li class="text-gray-500 text-3xl">/</li>
-      <li class="text-gray-500 bg-gray-100 px-4 py-2 rounded-full text-sm tracking-wide font-bold cursor-pointer flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-current mr-2" viewBox="0 0 512 512">
-          <path
-            d="M437.02 74.98C388.668 26.63 324.379 0 256 0S123.332 26.629 74.98 74.98C26.63 123.332 0 187.621 0 256s26.629 132.668 74.98 181.02C123.332 485.37 187.621 512 256 512s132.668-26.629 181.02-74.98C485.37 388.668 512 324.379 512 256s-26.629-132.668-74.98-181.02zM111.105 429.297c8.454-72.735 70.989-128.89 144.895-128.89 38.96 0 75.598 15.179 103.156 42.734 23.281 23.285 37.965 53.687 41.742 86.152C361.641 462.172 311.094 482 256 482s-105.637-19.824-144.895-52.703zM256 269.507c-42.871 0-77.754-34.882-77.754-77.753C178.246 148.879 213.13 114 256 114s77.754 34.879 77.754 77.754c0 42.871-34.883 77.754-77.754 77.754zm170.719 134.427a175.9 175.9 0 0 0-46.352-82.004c-18.437-18.438-40.25-32.27-64.039-40.938 28.598-19.394 47.426-52.16 47.426-89.238C363.754 132.34 315.414 84 256 84s-107.754 48.34-107.754 107.754c0 37.098 18.844 69.875 47.465 89.266-21.887 7.976-42.14 20.308-59.566 36.542-25.235 23.5-42.758 53.465-50.883 86.348C50.852 364.242 30 312.512 30 256 30 131.383 131.383 30 256 30s226 101.383 226 226c0 56.523-20.86 108.266-55.281 147.934zm0 0"
-            data-original="#000000" />
-        </svg>
-       <a href="../vues/pageDisponible.php">Actionle</a>
-      </li>
+    <div class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0">
 
-      <li  class="text-gray-500 text-3xl" >/</li>
-      <li  class="text-white bg-gray-700 px-4 py-2 rounded-full text-sm tracking-wide font-bold cursor-pointer flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-current mr-2" viewBox="0 0 24 24">
-          <g fill-rule="evenodd" clip-rule="evenodd">
-            <path
-              d="M7 4a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-6a1 1 0 1 1 2 0v6a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5h6a1 1 0 1 1 0 2z"
-              data-original="#000000" />
-            <path
-              d="M19.197 4a.803.803 0 0 0-.567.235l-7.877 7.877-.379 1.514 1.514-.379 7.877-7.877A.803.803 0 0 0 19.197 4zm-1.981-1.18a2.802 2.802 0 1 1 3.963 3.964l-8.073 8.073a1 1 0 0 1-.464.263l-3.4.85a1 1 0 0 1-1.212-1.213l.85-3.399a1 1 0 0 1 .263-.464z"
-              data-original="#000000" />
-            <path d="M15.293 5.293a1 1 0 0 1 1.414 0l2 2a1 1 0 0 1-1.414 1.414l-2-2a1 1 0 0 1 0-1.414z"
-              data-original="#000000" />
-          </g>
-        </svg>
-      <button onclick="showEditModal()">Edit</button>  
-      </li>
-    </ul>
-        </div>
-        <div id="wrapper" class="max-w-xl  mx-auto">
-            <div class="sm:grid sm:h-32 sm:grid-flow-row sm:gap-4 sm:grid-cols-3">
-                <div id="jh-stats-positive" class="flex flex-col justify-center px-4 py-4 bg-white border border-gray-300 rounded">
-                    <div>
-                        <div>
-                            <p class="flex items-center justify-end text-green-500 text-md">
-                                <span class="font-bold">6%</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path class="heroicon-ui" d="M20 15a1 1 0 002 0V7a1 1 0 00-1-1h-8a1 1 0 000 2h5.59L13 13.59l-3.3-3.3a1 1 0 00-1.4 0l-6 6a1 1 0 001.4 1.42L9 12.4l3.3 3.3a1 1 0 001.4 0L20 9.4V15z"/></svg>
-                            </p>
-                        </div>
-                        <p class="text-3xl font-semibold text-center text-gray-800">43</p>
-                        <p class="text-lg text-center text-gray-500">New Tickets</p>
-                    </div>
-                </div>
-    
-                <div id="jh-stats-negative" class="flex flex-col justify-center px-4 py-4 mt-4 bg-white border border-gray-300 rounded sm:mt-0">
-                    <div>
-                        <div>
-                            <p class="flex items-center justify-end text-red-500 text-md">
-                                <span class="font-bold">6%</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path class="heroicon-ui" d="M20 9a1 1 0 012 0v8a1 1 0 01-1 1h-8a1 1 0 010-2h5.59L13 10.41l-3.3 3.3a1 1 0 01-1.4 0l-6-6a1 1 0 011.4-1.42L9 11.6l3.3-3.3a1 1 0 011.4 0l6.3 6.3V9z"/></svg>
-                            </p>
-                        </div>
-                        <p class="text-3xl font-semibold text-center text-gray-800">43</p>
-                        <p class="text-lg text-center text-gray-500">New Tickets</p>
-                    </div>
+        <!--Main Col-->
+        <div id="profile"
+            class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
+
+
+            <div class="p-4 md:p-12 text-center lg:text-left">
+                <!-- Image for mobile view-->
+                <div class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
+                    style="background-image: url('https://source.unsplash.com/MP0IUfwrn0A')"></div>
+
+                <h1 class="text-3xl font-bold pt-8 lg:pt-0"><?= $list->full_name?></h1>
+                <div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
+                <p class="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
+                    <svg class="h-4 fill-current text-green-700 pr-4" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="M9 12H1v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6h-8v2H9v-2zm0-1H0V5c0-1.1.9-2 2-2h4V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1h4a2 2 0 0 1 2 2v6h-9V9H9v2zm3-8V2H8v1h4z" />
+                    </svg> <?= $list->label?>
+                </p>
+                <p class="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
+                    <svg class="h-4 fill-current text-green-700 pr-4" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm7.75-8a8.01 8.01 0 0 0 0-4h-3.82a28.81 28.81 0 0 1 0 4h3.82zm-.82 2h-3.22a14.44 14.44 0 0 1-.95 3.51A8.03 8.03 0 0 0 16.93 14zm-8.85-2h3.84a24.61 24.61 0 0 0 0-4H8.08a24.61 24.61 0 0 0 0 4zm.25 2c.41 2.4 1.13 4 1.67 4s1.26-1.6 1.67-4H8.33zm-6.08-2h3.82a28.81 28.81 0 0 1 0-4H2.25a8.01 8.01 0 0 0 0 4zm.82 2a8.03 8.03 0 0 0 4.17 3.51c-.42-.96-.74-2.16-.95-3.51H3.07zm13.86-8a8.03 8.03 0 0 0-4.17-3.51c.42.96.74 2.16.95 3.51h3.22zm-8.6 0h3.34c-.41-2.4-1.13-4-1.67-4S8.74 3.6 8.33 6zM3.07 6h3.22c.2-1.35.53-2.55.95-3.51A8.03 8.03 0 0 0 3.07 6z" />
+                    </svg> matricule - <?= $list->matricule?>° M,
+                </p>
+                <p class="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
+                    <svg class="h-4 fill-current text-green-700 pr-4" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20">
+                        <path
+                            d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm7.75-8a8.01 8.01 0 0 0 0-4h-3.82a28.81 28.81 0 0 1 0 4h3.82zm-.82 2h-3.22a14.44 14.44 0 0 1-.95 3.51A8.03 8.03 0 0 0 16.93 14zm-8.85-2h3.84a24.61 24.61 0 0 0 0-4H8.08a24.61 24.61 0 0 0 0 4zm.25 2c.41 2.4 1.13 4 1.67 4s1.26-1.6 1.67-4H8.33zm-6.08-2h3.82a28.81 28.81 0 0 1 0-4H2.25a8.01 8.01 0 0 0 0 4zm.82 2a8.03 8.03 0 0 0 4.17 3.51c-.42-.96-.74-2.16-.95-3.51H3.07zm13.86-8a8.03 8.03 0 0 0-4.17-3.51c.42.96.74 2.16.95 3.51h3.22zm-8.6 0h3.34c-.41-2.4-1.13-4-1.67-4S8.74 3.6 8.33 6zM3.07 6h3.22c.2-1.35.53-2.55.95-3.51A8.03 8.03 0 0 0 3.07 6z" />
+                    </svg> phone - <?= $list->numeroTelephone?>
+                </p>
+                <p class="pt-8 text-sm"><?= $list->biography?></p>
+
+                <div onclick="showEditModal()" class="pt-12 pb-8">
+                    <button class="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full">
+				        Edite
+				     </button>
                 </div>
 
-                <div id="jh-stats-neutral" class="flex flex-col justify-center px-4 py-4 mt-4 bg-white border border-gray-300 rounded sm:mt-0">
-                    <div>
-                        <div>
-                            <p class="flex items-center justify-end text-gray-500 text-md">
-                                <span class="font-bold">0%</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path class="heroicon-ui" d="M17 11a1 1 0 010 2H7a1 1 0 010-2h10z"/></svg>
-                            </p>
-                        </div>
-                        <p class="text-3xl font-semibold text-center text-gray-800">43</p>
-                        <p class="text-lg text-center text-gray-500">New Tickets</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-            <!-- Social Links -->
-            <div
-                class="fixed right-2 bottom-20 flex flex-col rounded-sm bg-gray-200 text-gray-500 dark:bg-gray-200/80 dark:text-gray-700 hover:text-gray-600 hover:dark:text-gray-400">
-                <a href="https://www.linkedin.com/in/samuel-abera-6593a2209/">
-                    <div class="p-2 hover:text-primary hover:dark:text-primary">
-                        <svg class="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-blue-500" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            viewBox="0 0 24 24">
-                            <path fill-rule="evenodd"
-                                d="M12.51 8.796v1.697a3.738 3.738 0 0 1 3.288-1.684c3.455 0 4.202 2.16 4.202 4.97V19.5h-3.2v-5.072c0-1.21-.244-2.766-2.128-2.766-1.827 0-2.139 1.317-2.139 2.676V19.5h-3.19V8.796h3.168ZM7.2 6.106a1.61 1.61 0 0 1-.988 1.483 1.595 1.595 0 0 1-1.743-.348A1.607 1.607 0 0 1 5.6 4.5a1.601 1.601 0 0 1 1.6 1.606Z"
-                                clip-rule="evenodd" />
-                            <path d="M7.2 8.809H4V19.5h3.2V8.809Z" />
-                        </svg>
-
-                    </div>
-                </a>
-                <a href="https://twitter.com/Samuel7Abera7">
-                    <div class="p-2 hover:text-primary hover:dark:text-primary">
-                        <svg class="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-gray-900" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            viewBox="0 0 24 24">
+                <div class="mt-6 pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
+                    <a class="link" href="#" data-tippy-content="@facebook_handle">
+                        <svg class="h-6 fill-current text-gray-600 hover:text-green-700" role="img" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title>Facebook</title>
                             <path
-                                d="M13.795 10.533 20.68 2h-3.073l-5.255 6.517L7.69 2H1l7.806 10.91L1.47 22h3.074l5.705-7.07L15.31 22H22l-8.205-11.467Zm-2.38 2.95L9.97 11.464 4.36 3.627h2.31l4.528 6.317 1.443 2.02 6.018 8.409h-2.31l-4.934-6.89Z" />
+                                d="M22.676 0H1.324C.593 0 0 .593 0 1.324v21.352C0 23.408.593 24 1.324 24h11.494v-9.294H9.689v-3.621h3.129V8.41c0-3.099 1.894-4.785 4.659-4.785 1.325 0 2.464.097 2.796.141v3.24h-1.921c-1.5 0-1.792.721-1.792 1.771v2.311h3.584l-.465 3.63H16.56V24h6.115c.733 0 1.325-.592 1.325-1.324V1.324C24 .593 23.408 0 22.676 0" />
                         </svg>
+                    </a>
+                    <a class="link" href="#" data-tippy-content="@twitter_handle">
+                        <svg class="h-6 fill-current text-gray-600 hover:text-green-700" role="img" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title>Twitter</title>
+                            <path
+                                d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z" />
+                        </svg>
+                    </a>
+                    <a class="link" href="#" data-tippy-content="@github_handle">
+                        <svg class="h-6 fill-current text-gray-600 hover:text-green-700" role="img" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title>GitHub</title>
+                            <path
+                                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                        </svg>
+                    </a>
+                    <a class="link" href="#" data-tippy-content="@unsplash_handle">
+                        <svg class="h-6 fill-current text-gray-600 hover:text-green-700" role="img" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title>Unsplash</title>
+                            <path d="M7.5 6.75V0h9v6.75h-9zm9 3.75H24V24H0V10.5h7.5v6.75h9V10.5z" />
+                        </svg>
+                    </a>
+                    <a class="link" href="#" data-tippy-content="@dribble_handle">
+                        <svg class="h-6 fill-current text-gray-600 hover:text-green-700" role="img" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title>Dribbble</title>
+                            <path
+                                d="M12 24C5.385 24 0 18.615 0 12S5.385 0 12 0s12 5.385 12 12-5.385 12-12 12zm10.12-10.358c-.35-.11-3.17-.953-6.384-.438 1.34 3.684 1.887 6.684 1.992 7.308 2.3-1.555 3.936-4.02 4.395-6.87zm-6.115 7.808c-.153-.9-.75-4.032-2.19-7.77l-.066.02c-5.79 2.015-7.86 6.025-8.04 6.4 1.73 1.358 3.92 2.166 6.29 2.166 1.42 0 2.77-.29 4-.814zm-11.62-2.58c.232-.4 3.045-5.055 8.332-6.765.135-.045.27-.084.405-.12-.26-.585-.54-1.167-.832-1.74C7.17 11.775 2.206 11.71 1.756 11.7l-.004.312c0 2.633.998 5.037 2.634 6.855zm-2.42-8.955c.46.008 4.683.026 9.477-1.248-1.698-3.018-3.53-5.558-3.8-5.928-2.868 1.35-5.01 3.99-5.676 7.17zM9.6 2.052c.282.38 2.145 2.914 3.822 6 3.645-1.365 5.19-3.44 5.373-3.702-1.81-1.61-4.19-2.586-6.795-2.586-.825 0-1.63.1-2.4.285zm10.335 3.483c-.218.29-1.935 2.493-5.724 4.04.24.49.47.985.68 1.486.08.18.15.36.22.53 3.41-.43 6.8.26 7.14.33-.02-2.42-.88-4.64-2.31-6.38z" />
+                        </svg>
+                    </a>
+                    <a class="link" href="#" data-tippy-content="@instagram_handle">
+                        <svg class="h-6 fill-current text-gray-600 hover:text-green-700" role="img" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <title>Instagram</title>
+                            <path
+                                d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z" />
+                        </svg>
+                    </a>
+                    <a class="link" href="#" data-tippy-content="@youtube_handle">
+                        <svg class="h-6 fill-current text-gray-600 hover:text-green-700" role="img"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <title>YouTube</title>
+                            <path
+                                d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z" />
+                        </svg>
+                    </a>
+                </div>
 
-                    </div>
-                </a>
-                <a href="">
-                    <div class="p-2 hover:text-blue-500 hover:dark:text-blue-500">
-                        <svg class="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-blue-700" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            viewBox="0 0 24 24">
-                            <path fill-rule="evenodd"
-                                d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="https://www.youtube.com/@silentcoder7">
-                    <div class="p-2 hover:text-primary hover:dark:text-primary">
-                        <svg class="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-red-600" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            viewBox="0 0 24 24">
-                            <path fill-rule="evenodd"
-                                d="M21.7 8.037a4.26 4.26 0 0 0-.789-1.964 2.84 2.84 0 0 0-1.984-.839c-2.767-.2-6.926-.2-6.926-.2s-4.157 0-6.928.2a2.836 2.836 0 0 0-1.983.839 4.225 4.225 0 0 0-.79 1.965 30.146 30.146 0 0 0-.2 3.206v1.5a30.12 30.12 0 0 0 .2 3.206c.094.712.364 1.39.784 1.972.604.536 1.38.837 2.187.848 1.583.151 6.731.2 6.731.2s4.161 0 6.928-.2a2.844 2.844 0 0 0 1.985-.84 4.27 4.27 0 0 0 .787-1.965 30.12 30.12 0 0 0 .2-3.206v-1.516a30.672 30.672 0 0 0-.202-3.206Zm-11.692 6.554v-5.62l5.4 2.819-5.4 2.801Z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                </a>
+                <!-- Use https://simpleicons.org/ to find the svg for your preferred product -->
+
             </div>
-           
 
         </div>
-    </div>
-        <div
-            class="xl:w-[80%] lg:w-[90%]  md:w-[90%] sm:w-[92%] xs:w-[90%] mx-auto flex flex-col gap-4 items-center relative lg:-top-8 md:-top-6 sm:-top-4 xs:-top-4">
-            <!-- Description -->
-            <p class="w-fit text-gray-700 dark:text-gray-400 text-md"><?= $list->biography ?></p>
 
+        <!--Img Col-->
+        <div class="w-full lg:w-2/5">
+            <!-- Big profile image for side bar (desktop) -->
+            <img src="<?= $list->img?>" class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block">
+            <!-- Image from: http://unsplash.com/photos/MP0IUfwrn0A -->
 
-            <!-- Detail -->
-            <div class="w-full my-auto py-6 flex flex-col justify-center gap-6">
-    <!-- Personal Info Section -->
-    <div class="w-full flex sm:flex-row xs:flex-col gap-4 justify-center">
-        <!-- Left Column -->
-        <div class="w-full bg-white p-6 shadow-lg rounded-lg">
-            <dl class="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
-                <div class="flex flex-col pb-4">
-                    <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Full Name</dt>
-                    <dd class="text-xl font-semibold"><?= $list->full_name ?></dd>
-                </div>
-                <div class="flex flex-col py-4">
-                    <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Speciality</dt>
-                    
-                    <dd class="text-xl font-semibold"><?= $list->label?></dd>
-                  
-
-                </div>
-                <div class="flex flex-col py-4">
-                    <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Matricule</dt>
-                    <dd class="text-xl font-semibold"><?= $list->matricule ?></dd>
-                </div>
-                <div class="flex flex-col py-4">
-                    <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Age</dt>
-                    <dd class="text-xl font-semibold"><?= $list->age ?></dd>
-                </div>
-            </dl>
         </div>
 
-        <!-- Right Column -->
-        <div class="w-full bg-white p-6 shadow-lg rounded-lg">
-            <dl class="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
-                <div class="flex flex-col pt-4">
-                    <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Phone Number</dt>
-                    <dd class="text-xl font-semibold"><?= $list->numeroTelephone ?></dd>
-                </div>
-                <div class="flex flex-col pt-4">
-                    <dt class="mb-1 text-gray-500 text-lg dark:text-gray-400">Email</dt>
-                    <dd class="text-xl font-semibold"><?= $list->email ?></dd>
-                </div>
-            </dl>
+
+        <!-- Pin to top right corner -->
+        <div class="absolute top-0 right-0 h-12 w-18 p-4">
+            <button class="js-change-theme focus:outline-none">🌙</button>
         </div>
+
     </div>
 
-   
-</section>
+  
+		
+    
+
+</body>
+
 
 <section>
-  <div id="showEditModal" class="hidden scale-[0.9] bg-white fixed top-[0] left-[50%] -translate-x-2/4 max-w-4xl mx-auto font-[sans-serif] p-6">
+  <div id="showEditModal" class="hidden scale-[0.9] bg-white fixed top-[20%] left-[50%] -translate-x-2/4 max-w-4xl mx-auto font-[sans-serif] p-6">
       <div class="text-center mb-16">
        
         <h4 class="text-gray-800 text-base  mt-6">Sign up into your account</h4>
       </div>
 
-      <form method="POST" action="action.php?action=edite">
+      <form method="POST" action="../vues/Account_avocat.php?email=<?= $list->email ?>" enctype="multipart/form-data">
         <div class="grid sm:grid-cols-2 gap-8">
           <div>
             <label class="text-gray-800 text-sm mb-2 block">FullName</label>
-            <input value="<?= $list->full_name ?>" name="name" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter name" />
+            <input value="<?= $list->full_name ?>" name="full_name" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter name" />
           </div>
-          <div>
-            <label class="text-gray-800 text-sm mb-2 block">specialité</label>
-            <input value="<?= $list->label ?>" name="specialité" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter last name" />
-          </div>
-          <div>
-            <label class="text-gray-800 text-sm mb-2 block">Email Id</label>
-            <input value="<?= $list->email ?>" name="email" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter email" />
-          </div>
+    
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Mobile No.</label>
-            <input value="<?= $list->numeroTelephone ?>" name="number" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter mobile number" />
+            <input value="<?= $list->numeroTelephone ?>" name="numeroTelephone" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter mobile number" />
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">image</label>
@@ -267,7 +224,7 @@ $Listusers = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecial
          
           <div>
             <label class="text-gray-800 text-sm mb-2 block">biography</label>
-            <textarea value="<?= $list->biography ?>" name="biography" type="matricule" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter confirm password" ></textarea>
+            <textarea value="<?= $list->biography ?>" name="biography" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all" placeholder="Enter confirm password" ></textarea>
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Age</label>
@@ -276,13 +233,13 @@ $Listusers = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecial
         </div>
         
         <div class="!mt-12">
-          <button type="button" class="py-3.5 px-7 text-sm  tracking-wider rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+          <button type="submit" class="py-3.5 px-7 text-sm  tracking-wider rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
            Edite
           </button>
         </div>
       </form>
     </div>
-    <?php endif; ?>
+    <?php endforeach; ?>
 </section>
 <script src="../script/main.js" ></script>
 
