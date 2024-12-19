@@ -5,6 +5,7 @@ require_once '../vues/nav.php';
 require("../database.php");
 
 $ListAvocat = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecialite = specialite.idSP ')->fetchAll(PDO::FETCH_OBJ);
+// $Listusers = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
 
 ?>
 
@@ -54,17 +55,21 @@ $ListAvocat = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecia
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-sm:gap-8">
           
-        <?php foreach($ListAvocat as $list) :?>
+        <?php foreach($ListAvocat as $list) :
+          if ($list->roles == 1) {
+
+         
+          ?>
           <div class="bg-white rounded overflow-hidden">
-            <img src="https://images.pexels.com/photos/5673485/pexels-photo-5673485.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Blog Post 1" class="w-full h-52 object-cover" />
+            <img src="<?= $list->img?>" alt="Blog Post 1" class="w-full h-52 object-cover" />
             <div class="p-6">
               <h3 class="text-lg font-bold text-[#CA965C] mb-3"><?= $list->full_name?></h3>
               <p class="text-gray-500 text-sm"><?= $list->label?></p>
               <p class="text-gray-800 text-[13px] font-semibold mt-4">Disponible</p>
-              <a onclick='showEditModal()'  href="javascript:void(0);" class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px]">Reserv</a>
+              <a onclick='showEditModal()'  href="../vues/home_reservation.php?id=<?= $list->id?>" class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px]">Reserv</a>
             </div>
           </div>
-          <?php endforeach;?>
+          <?php   } endforeach; ?>
           
     </div>
 <div>
@@ -73,7 +78,7 @@ include '../vues/footer.php';
 ?>
 <div id='reservation_form'  class="hidden fixed top-0  left-[50%] -translate-x-2/4  z-500 max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
     <div class="text-2xl py-4 px-6 bg-gray-900 text-white text-center font-bold uppercase">
-        Book an Appointment
+         Appointment
     </div>
     <form class="py-4 px-6" action="" method="POST">
         
@@ -109,10 +114,10 @@ include '../vues/footer.php';
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="service" name="service">
                 <option value="">Select a service</option>
-                <option value="haircut">Haircut</option>
-                <option value="coloring">Coloring</option>
-                <option value="styling">Styling</option>
-                <option value="facial">Facial</option>
+                <?php foreach($Listusers as $list): ?>
+             <option value="<?= $list->idSP ?>"><?= $list->label ?></option>
+        <?php endforeach; ?>
+                
             </select>
         </div>
         
@@ -120,7 +125,7 @@ include '../vues/footer.php';
             <button 
                 class="bg-gray-900 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline"
                 type="submit">
-                Book Appointment
+                Appointment
             </button>
         </div>
 
@@ -135,5 +140,6 @@ include '../vues/footer.php';
    
    
 }
+
 
 </script>

@@ -3,7 +3,6 @@
 
 <?php 
 require_once '../database.php';
-
 require_once "../vues/Admin_Panel.php";
 $Listusers = $pdo->query('SELECT * FROM users JOIN resvations on users.id = resvations.idClient ')->fetchAll(PDO::FETCH_OBJ);
 

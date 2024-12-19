@@ -14,7 +14,6 @@ $query->execute();
 
 $Listusers = $query->fetchAll(PDO::FETCH_OBJ);
 
-
 } else {
     echo "Email parameter is missing.";
 }

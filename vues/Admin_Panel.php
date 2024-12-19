@@ -1,4 +1,12 @@
 
+
+<?php
+require("../database.php");
+
+ $Listusers = $pdo->query('SELECT * FROM users')->fetchAll(PDO::FETCH_OBJ);
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,7 +80,11 @@
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                 </svg>    
                 <div>
-                <a href="../vues/Admin_Panel.php?email=profile">Profile</a> 
+                <?php $list = end($Listusers);
+               if ($list):
+                ?>
+                <a href="../vues/Account_avocat.php?email=<?= $list->email ?>">Profile</a> 
+                <?php  endif;?>
                 </div>
             </div>
             <div onclick ="Table()"  class =  "hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
@@ -89,7 +101,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
                 </svg>                      
                 <div>
-                    Graph
+                  <a href="../vues/pageDisponible.php">Action</a>
                 </div>
             </div>
         </div>
@@ -121,13 +133,13 @@
                 <li class = "inline-flex items-center">
                     <a href="#" class = "inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                         <svg class = "w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-                        <a href="Location: ../vues/Admin_Panel.php?email=">Profile</a> 
+                        <a href="Location: ../vues/Admin_Panel.php?email=">home</a> 
                     </a>
                 </li>
                 <li>
                     <div class = "flex items-center">
                         <svg class = "w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path></svg>
-                        <a href="../vues/Admin_Panel.php?email=profile" class = "ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">home</a>
+                        <a href="../vues/list_avocat.php?email=profile" class = "ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">table</a>
                     </div>
                 </li>
             </ol>

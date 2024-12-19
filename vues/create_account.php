@@ -1,6 +1,6 @@
 
 <?php
-require_once '../vues/nav.php';
+
 require_once '../database.php';
 
 $matricule = isset($_POST['matricule']) && $_POST['matricule'] !== '' ? $_POST['matricule'] : NULL;
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (in_array($file_ext, $permited)) {
         $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
         $upload_img = "upload/" . $unique_image;
-
+    
         if (move_uploaded_file($file_temp, $upload_img)) {
            
         } else {
@@ -45,18 +45,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   $password_ha = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-  $sqlusers = $pdo->prepare("INSERT INTO users (full_name, pass_word, age, email, matricule, numeroTelephone, idSpecialite,img) VALUES (?, ?, ?, ?, ?,?,?,?)");
+  $sqlusers = $pdo->prepare("INSERT INTO users (full_name, pass_word, age, email, matricule, numeroTelephone, idSpecialite,img,roles) VALUES (?, ?, ?, ?, ?,?,?,?,?)");
 
-  $sqlusers->execute([$_POST['name'], $password_ha, $_POST['age'], $_POST['email'], $matricule, $_POST['number'], $Specialite,$upload_img]);
+  $sqlusers->execute([$_POST['name'], $password_ha, $_POST['age'], $_POST['email'], $matricule, $_POST['number'], $Specialite,$upload_img,$_POST['roles']]);
 
-
-
+if ($sqlusers) {
+ header("location:../vues/login.php");
+}
 }
 
 
 $Listusers = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
 
-
+require_once '../vues/nav.php';
 ?>
 
 
@@ -70,7 +71,8 @@ $Listusers = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
       <div class="mx-4 mb-4 -mt-16">
         <form method="POST" class="max-w-4xl mx-auto bg-white shadow-[0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md" action="" enctype="multipart/form-data">
           <div class="grid md:grid-cols-2 gap-8">
-            <button name="avocat" value="avocat" onclick="getvalue(this.value)" type="button"
+        
+            <button  name="avocat" value="avocat" onclick="getvalue(this.value)" type="button"
               class="w-full px-6 py-3 flex items-center justify-center rounded-md text-gray-800 text-sm tracking-wider font-semibold border-none outline-none bg-gray-100 hover:bg-gray-200">
               <i class="fas fa-user-tie role-icon"></i>
               Vous êtes un avocat
@@ -80,6 +82,7 @@ $Listusers = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
             <i class="fas fa-user-circle role-icon p-2"></i>
               Vous êtes un utilisateur
             </button>
+     
             <input type="hidden" name="selected_role" id="selected_role">
         <button type="submit" class="hidden">Submit</button>
           </div>
@@ -104,11 +107,11 @@ $Listusers = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
             </div>
             <div>
               <label class="text-gray-800 text-sm mb-2 block">Email </label>
-              <input name="email" type="text" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter email" />
+              <input  name="email" type="text" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter email" />
             </div>
             <div>
               <label class="text-gray-800 text-sm mb-2 block">password</label>
-              <input name="password" type="password" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter confirm password" />
+              <input  name="password" type="password" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter confirm password" />
             </div>
             <div id="Mobile">
               <label  class="text-gray-800 text-sm mb-2 block">Mobile No.</label>
@@ -125,7 +128,7 @@ $Listusers = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
               <?php foreach($Listusers as $list): ?>
              <option value="<?= $list->idSP ?>"><?= $list->label ?></option>
         <?php endforeach; ?>
-
+         
               </select>
             </div>
             
@@ -134,19 +137,26 @@ $Listusers = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
               <input  name="avatar" type="file" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter password" />
             </div>
           </div>
+          <div >
+              <label class=" hidden text-gray-800 text-sm mb-2 block"></label>
+              <input id="pass" value="1" name="roles" type="text" class=" hidden bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter " />
+            </div>
 
           <div class="mt-8">
+    
             <button type="submit" class="py-3 px-6 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none">
-            ENVOYER
+            ENVOYER 
             </button>
           </div>
         </form>
       </div>
     </div>
-
-    <?php
+        <?php
 include '../vues/footer.php';
 ?>
+</html>
+</body>
+
 <script src="../script/main.js" ></script>
 <script>
   function getvalue(value){
@@ -155,16 +165,17 @@ include '../vues/footer.php';
         document.getElementById("Mobile").style.display="none";
         document.getElementById("Inscription").textContent="Inscription utilisateur";
         document.getElementById("Special").style.display="none";
-      
-        document.getElementById("role").value = "user"; 
-       
+        document.getElementById("pass").value = 0;
+
 
     }else{
         document.getElementById("matricule").style.display="block";
         document.getElementById("Mobile").style.display="block";
         document.getElementById("Inscription").textContent="Inscription avocat";
         document.getElementById("Special").style.display="block";
-        document.getElementById("role").value = "admin"; 
+        document.getElementById("pass").value = 1;
+       
+       
     }
 }
 </script>

@@ -12,18 +12,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
       echo "Please enter both email and password.";
   } else {
       try {
-          $stmt = $pdo->prepare("SELECT pass_word , matricule FROM users WHERE email = :email");
+          $stmt = $pdo->prepare("SELECT pass_word , matricule ,roles FROM users WHERE email = :email");
           $stmt->execute(['email' => $email]);
 
           $user = $stmt->fetch(PDO::FETCH_OBJ);
 
           if ($user) {
               if (password_verify($password, $user->pass_word)) {
-                
-                header('Location: ../vues/Account_avocat.php?email=' . $_POST['email']);
+                if ($user->roles == 1) {
+                   header('Location: ../vues/Account_avocat.php?email=' . $_POST['email']);
                      exit();
+                }else{
+                  header('Location: ../vues/home.php?email=' . $_POST['email']);
 
-                
+                }
               } else {
                   echo "Incorrect password.";
               }
