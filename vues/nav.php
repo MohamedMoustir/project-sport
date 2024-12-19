@@ -57,7 +57,7 @@
           </select>
           <li
             class=' max-lg:py-3 max-lg:px-3 relative lg:hover:after:absolute  lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:top-7 lg:after:transition-all lg:after:duration-300'>
-            <a href='javascript:void(0)' class='text-white block font-bold text-[15px] rounded-full hover:bg-[#CA965C] px-[14px] py-[7px]'>Contactez-nous</a>
+            <a href='../vues/getreservation.php' class='text-white block font-bold text-[15px] rounded-full hover:bg-[#CA965C] px-[14px] py-[7px]'>Reservation</a>
           </li>
         </ul>
       </div>

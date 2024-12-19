@@ -1,12 +1,13 @@
 
 
 <?php
+session_start();
 require_once '../vues/nav.php';
 require("../database.php");
 
 $ListAvocat = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecialite = specialite.idSP ')->fetchAll(PDO::FETCH_OBJ);
 // $Listusers = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
-
+echo $_SESSION['email'];
 ?>
 
 
@@ -46,6 +47,8 @@ $ListAvocat = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecia
 </section>
 
 
+<section>
+
 
 <div class="p-4 my-[280px]" id="reserv" >
       <div class="max-w-6xl max-lg:max-w-3xl max-sm:max-w-sm mx-auto">
@@ -73,9 +76,8 @@ $ListAvocat = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecia
           
     </div>
 <div>
-  <?php
-include '../vues/footer.php';
-?>
+</section>
+<section>
 <div id='reservation_form'  class="hidden fixed top-0  left-[50%] -translate-x-2/4  z-500 max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
     <div class="text-2xl py-4 px-6 bg-gray-900 text-white text-center font-bold uppercase">
          Appointment
@@ -130,10 +132,21 @@ include '../vues/footer.php';
         </div>
 
     </form>
+
 </div>
+
 </div>
-    
+</section>
+<div>
+<?php
+require '../vues/footer.php';
+    ?>
+</div>
+</html>
+</body>
+
 <script>
+
   function showEditModal() {
     
     document.getElementById("reservation_form").classList.toggle("hidden");

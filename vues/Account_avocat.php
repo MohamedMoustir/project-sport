@@ -49,7 +49,12 @@ if ($edite->execute()) {
 }
 
     $Listsp = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
+
+
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
