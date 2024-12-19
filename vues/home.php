@@ -7,7 +7,7 @@ require("../database.php");
 
 $ListAvocat = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecialite = specialite.idSP ')->fetchAll(PDO::FETCH_OBJ);
 // $Listusers = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
-echo $_SESSION['email'];
+
 ?>
 
 

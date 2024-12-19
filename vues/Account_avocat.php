@@ -1,10 +1,10 @@
 
 <?php
+session_start();
 require("../database.php");
 require_once "../vues/Admin_Panel.php";
-if (isset($_GET['email'])) {
-$email = $_GET['email'];
 
+$email = $_SESSION['email'];
 
 $query = $pdo->prepare('SELECT * FROM users 
                         JOIN specialite ON users.idSpecialite = specialite.idSP  
@@ -14,9 +14,7 @@ $query->execute();
 
 $Listusers = $query->fetchAll(PDO::FETCH_OBJ);
 
-} else {
-    echo "Email parameter is missing.";
-}
+
 // edite
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -53,8 +51,17 @@ if ($edite->execute()) {
 
 
 
-?>
 
+if (isset($_POST['logout'])) {
+  
+    session_unset(); 
+    session_destroy(); 
+
+    
+    exit();
+}
+echo $_SESSION['email'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +72,9 @@ if ($edite->execute()) {
 </head>
 <body>
 
-   
+<form method="POST">
+        <button type="submit" name="logout" class="bg-red-500 text-white p-2 rounded">Logout</button>
+    </form>
 <?php  foreach($Listusers as $list): ?>
 
     <body class="font-sans antialiased text-gray-900 leading-normal tracking-wider bg-cover"
@@ -210,7 +219,7 @@ if ($edite->execute()) {
         <h4 class="text-gray-800 text-base  mt-6">Sign up into your account</h4>
       </div>
 
-      <form method="POST" action="../vues/Account_avocat.php?email=<?= $list->email ?>" enctype="multipart/form-data">
+      <form method="POST" action="" enctype="multipart/form-data">
         <div class="grid sm:grid-cols-2 gap-8">
           <div>
             <label class="text-gray-800 text-sm mb-2 block">FullName</label>

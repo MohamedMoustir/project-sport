@@ -1,5 +1,6 @@
 
 <?php
+session_start();
 require("../database.php");
 include "../vues/nav.php";
 
@@ -23,13 +24,11 @@ if (isset($_GET['id'])) {
   
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-
-  
-
-  $sqlusers = $pdo->prepare("INSERT INTO resvations (idClient, DateReservation) VALUES (?, ?)");
-$name = 241;
+  $sqlusers = $pdo->prepare("INSERT INTO resvations (idClient, DateReservation,idAvocat) VALUES (?, ?,?)");
+$name = $_SESSION["id"];
+$idAvocat = $id = $_GET['id'];
 $stmt->bindParam(':date', $date, PDO::PARAM_STR);
-  $sqlusers->execute([$name, $_POST['label']]);
+$sqlusers->execute([$name, $_POST['label'],$idAvocat]);
 
 if ($sqlusers) {
 //  header("location:../vues/login.php");

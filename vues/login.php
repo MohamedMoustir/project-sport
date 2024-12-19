@@ -1,29 +1,32 @@
 
-<?php
+<?php  
+  
+ session_start();
     require_once "../database.php";
- 
 
-    // ob_start();
- 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_POST['password'])) {
   $email = trim($_POST['email']);
   $password = trim($_POST['password']); 
-   session_start();
-          $_SESSION['email'];
-            $_SESSION['password'];
-
+   
   if (empty($email) || empty($password)) {
       echo "Please enter both email and password.";
   } else {
       try {
-          $stmt = $pdo->prepare("SELECT pass_word , matricule ,roles FROM users WHERE email = :email");
+          $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
           $stmt->execute(['email' => $email]);
 
           $user = $stmt->fetch(PDO::FETCH_OBJ);
 
           if ($user) {
               if (password_verify($password, $user->pass_word)) {
+                $_SESSION['id'] =$user->id;
+                $_SESSION['email'] =$user->email;
+                $_SESSION['password'] =$user->password;
+                $_SESSION['roles'] =$user->reles;
+
+                
                 if ($user->roles == 1) {
+
                    header('Location: ../vues/Account_avocat.php?email=' . $_POST['email']);
                      exit();
                 }else{

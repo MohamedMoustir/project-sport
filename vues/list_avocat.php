@@ -2,9 +2,15 @@
 
 
 <?php 
-require_once '../database.php';
-require_once "../vues/Admin_Panel.php";
-$Listusers = $pdo->query('SELECT * FROM users JOIN resvations on users.id = resvations.idClient ')->fetchAll(PDO::FETCH_OBJ);
+session_start();
+require_once '../vues/nav.php';
+require("../database.php");
+$email = $_SESSION['email'];
+$query = $pdo->prepare('SELECT * FROM users JOIN resvations on users.id = resvations.idAvocat where users.email = :email');
+$query->bindParam(':email', $email, PDO::PARAM_STR); 
+$query->execute();
+$Listusers = $query->fetchAll(PDO::FETCH_OBJ); 
+
 
 ?>
 <!DOCTYPE html>
