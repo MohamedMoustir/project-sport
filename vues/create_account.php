@@ -7,11 +7,11 @@ $matricule = isset($_POST['matricule']) && $_POST['matricule'] !== '' ? $_POST['
   
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-if (empty($_POST['name']) || empty($_POST['password']) || empty($_POST['age']) || empty($_POST['email']) || empty($_POST['number']) || empty($_POST['Specialite']) || empty($matricule)) {
-  echo "Veuillez remplir tous les champs requis.";
-  header("Location:../vues/create_account.php");
-  exit(); 
-}
+// if (empty($_POST['name']) || empty($_POST['password']) || empty($_POST['age']) || empty($_POST['email']) || empty($_POST['number']) || empty($_POST['Specialite']) || empty($matricule)) {
+//   echo "Veuillez remplir tous les champs requis.";
+//   header("Location:../vues/create_account.php");
+//   exit(); 
+// }
 
   if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
       header("Location:../vues/create_account.php");
@@ -63,8 +63,19 @@ require '../vues/nav.php';
 
 
 
-
-   
+<div id="alert-2" class="fixed hidden top-4 right-4 z-50 flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 shadow-lg transform transition duration-300 ease-in-out scale-100 hover:scale-105" role="alert">
+    <svg class="flex-shrink-0 w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+    </svg>
+    <span class="sr-only">Error</span>
+    <div id="alert" class="ml-3 text-sm font-medium">Incorrect password.</div>
+    <button onclick="hideAlert()" type="button" class="ml-4 -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700" aria-label="Close">
+        <span class="sr-only">Close</span>
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+        </svg>
+    </button>
+</div>
 
 <div class="mb-[100px]">
       <div class="text-center  min-h-[160px] sm:p-6 p-4" style="backround-image:url('../imgs/original.jpg')">
@@ -86,7 +97,7 @@ require '../vues/nav.php';
               Vous êtes un utilisateur
             </button>
      
-            <input type="text" name="roles" id="pass">
+            <input type="hidden" name="roles" id="pass">
         <!-- <button type="submit" class="hidden">Submit</button> -->
           </div>
 
