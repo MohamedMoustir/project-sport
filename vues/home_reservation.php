@@ -21,10 +21,17 @@ if (isset($_GET['id'])) {
     die('ID is missing in the URL.');
 }
 
-  
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-  $sqlusers = $pdo->prepare("INSERT INTO resvations (idClient, DateReservation,idAvocat) VALUES (?, ?,?)");
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//  echo '<script>
+//  let events = JSON.parse(localStorage.getItem("events")) || [];
+//  events.forEach(date => {
+//  date.date;
+//  })
+//  console.log(date)
+//   </script>';
+
+$sqlusers = $pdo->prepare("INSERT INTO resvations (idClient, DateReservation,idAvocat) VALUES (?, ?,?)");
 $name = $_SESSION["id"];
 $idAvocat = $id = $_GET['id'];
 $stmt->bindParam(':date', $date, PDO::PARAM_STR);

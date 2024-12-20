@@ -29,7 +29,6 @@ $ListAvocat = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecia
           </select>
           <select name="" id="" class="  border  h-12 font-medium text-sm  px-[50%] pl-11 rounded-full  border-[#d0e0f7]  cursor-pointer">
             <option value="avocat maroc">avocat maroc</option>
-            
           </select>
           <span class="w-full lg:w-auto">
             <input type="submit" value="CHERCHER" class="bg-[#ca965c] rounded-full text-white h-[48px] w-full lg:w-[150px]">

@@ -26,12 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
 
                 
                 if ($user->roles == 1) {
-
-                   header('Location: ../vues/Account_avocat.php?email=' . $_POST['email']);
+                   header('Location: ../vues/Account_avocat.php');
                      exit();
                 }else{
-                  header('Location: ../vues/home.php?email=' . $_POST['email']);
-
+                  header('Location: ../vues/home.php');
                 }
               } else {
                   echo "Incorrect password.";

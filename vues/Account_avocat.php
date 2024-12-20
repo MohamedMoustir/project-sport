@@ -5,7 +5,6 @@ require("../database.php");
 require_once "../vues/Admin_Panel.php";
 
 $email = $_SESSION['email'];
-
 $query = $pdo->prepare('SELECT * FROM users 
                         JOIN specialite ON users.idSpecialite = specialite.idSP  
                         WHERE email = :email');
@@ -23,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $number = $_POST['number'] ?? null;
     $biography = $_POST['biography'] ?? null;
     $age = $_POST['age'] ?? null;
-    $email =$_GET['email'];
+    $email =$_SESSION['email'];
 
     $edite = $pdo->prepare("UPDATE users 
     SET full_name = :full_name, 
@@ -52,15 +51,7 @@ if ($edite->execute()) {
 
 
 
-if (isset($_POST['logout'])) {
-  
-    session_unset(); 
-    session_destroy(); 
 
-    
-    exit();
-}
-echo $_SESSION['email'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,9 +63,6 @@ echo $_SESSION['email'];
 </head>
 <body>
 
-<form method="POST">
-        <button type="submit" name="logout" class="bg-red-500 text-white p-2 rounded">Logout</button>
-    </form>
 <?php  foreach($Listusers as $list): ?>
 
     <body class="font-sans antialiased text-gray-900 leading-normal tracking-wider bg-cover"
@@ -216,10 +204,10 @@ echo $_SESSION['email'];
   <div id="showEditModal" class="hidden scale-[0.9] bg-white fixed top-[20%] left-[50%] -translate-x-2/4 max-w-4xl mx-auto font-[sans-serif] p-6">
       <div class="text-center mb-16">
        
-        <h4 class="text-gray-800 text-base  mt-6">Sign up into your account</h4>
+        <h4 class="text-gray-800 text-base  mt-6">Edite profile</h4>
       </div>
 
-      <form method="POST" action="" enctype="multipart/form-data">
+      <form method="POST" action="" >
         <div class="grid sm:grid-cols-2 gap-8">
           <div>
             <label class="text-gray-800 text-sm mb-2 block">FullName</label>
@@ -254,7 +242,15 @@ echo $_SESSION['email'];
     </div>
     <?php endforeach; ?>
 </section>
-<script src="../script/main.js" ></script>
+<script >
+
+function showEditModal() {
+    
+    document.getElementById("showEditModal").classList.toggle("hidden");
+    document.getElementById("Cover").style.filter ="blur(4px)";
+
+}
+</script>
 
 </body>
 </html>  

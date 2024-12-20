@@ -28,13 +28,13 @@ function showEditModal() {
 
  function getvalue(value){
     if (value == "utilisateur") {
+      
         document.getElementById("matricule").style.display="none";
         document.getElementById("Mobile").style.display="none";
         document.getElementById("Inscription").textContent="Inscription utilisateur";
         document.getElementById("Special").style.display="none";
         document.getElementById("pass").value = 0;
-
-
+     
     }else{
         document.getElementById("matricule").style.display="block";
         document.getElementById("Mobile").style.display="block";
@@ -46,75 +46,27 @@ function showEditModal() {
     }
 }
 
-
-
-
-  function validateEmail(email) {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    return emailRegex.test(email);
-  }
-
-  function validatePhoneNumber(phone) {
-    const phoneRegex = /^[0-9]{10}$/;
-    return phoneRegex.test(phone);
-  }
-
-  
-  function validateName(name) {
-    const nameRegex = /^[a-zA-Z\s]+$/;
-    return nameRegex.test(name);
-  }
-
-  function validateAge(age) {
-    const ageRegex = /^[1-9][0-9]*$/;
-    return ageRegex.test(age);
-  }
-
-  function validateForm(event) {
-    const name = document.querySelector('input[name="name"]').value;
-    const email = document.querySelector('input[name="email"]').value;
-    const password = document.querySelector('input[name="password"]').value;
-    const phoneNumber = document.querySelector('input[name="number"]').value;
-    const age = document.querySelector('input[name="age"]').value;
-
-    if (!validateName(name)) {
-      document.getElementById("error").innerHTML="Invalid name. Only alphabets and spaces are allowed.";
-      document.getElementById("alert-2").style.display="flex"
+  document.getElementById('myForm').addEventListener('submit', function(event) {
+    
+    var name = document.querySelector('[name="name"]').value;
+    var password = document.querySelector('[name="password"]').value;
+    var age = document.querySelector('[name="age"]').value;
+    var email = document.querySelector('[name="email"]').value;
+    var number = document.querySelector('[name="number"]').value;
+    var matricule = document.querySelector('[name="matricule"]').value;
+    var specialite = document.querySelector('[name="Specialite"]').value;
+    
+   
+    if (!name || !password || !age || !email || !number || !matricule || !specialite) {
+      alert("Veuillez remplir tous les champs requis.");
       event.preventDefault();
-      return false;
+    } else {
+   
+      var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(email)) {
+        alert("Veuillez entrer un email valide.");
+        event.preventDefault(); 
+      }
     }
-
-    if (!validateEmail(email)) {
-      document.getElementById("error").innerHTML="Invalid email address.";
-      document.getElementById("alert-2").style.display="flex"
-      event.preventDefault();
-      return false;
-    }
-
-    if (!validatePassword(password)) {
-      document.getElementById("error").innerHTML="Password must be at least 6 characters long, contain one uppercase letter, one lowercase letter, and one number.";
-      document.getElementById("alert-2").style.display="flex"
-      event.preventDefault();
-      return false;
-    }
-
-    if (!validatePhoneNumber(phoneNumber)) {
-      document.getElementById("error").innerHTML="Invalid phone number. It must be 10 digits.";
-      document.getElementById("alert-2").style.display="flex"
-      event.preventDefault();
-      return false;
-    }
-
-    if (!validateAge(age)) {
-    document.getElementById("error").innerHTML="Invalid phone number. It must be 10 digits.";
-      document.getElementById("alert-2").style.display="flex"
-      event.preventDefault();
-      return false;
-    }
-
-    return true; 
-  }
-
-  document.querySelector("form").addEventListener("submit", validateForm);
-
+  });
 

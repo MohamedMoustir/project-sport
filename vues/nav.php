@@ -1,4 +1,13 @@
-<?php?>
+<?php
+
+
+// if (isset($_POST['logout'])) {
+//   session_unset(); 
+//   session_destroy(); 
+//   exit();
+//   // header("location:../vues/login.php");
+// }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +75,7 @@
         <ul>
           <li id=" profile-dropdown-toggle"
             class=" relative px-1 after:absolute  after:w-full after:h-[2px] after:block after:top-8 after:left-0 after:transition-all after:duration-300">
-            <a href="../vues/create_account.php"><i class="fas fa-user bg-[#CA965C] p-[10px] rounded-full" aria-hidden="true"></i></a>
+            <a href=""><i class="fas fa-user bg-[#CA965C] p-[10px] rounded-full" aria-hidden="true"></i></a>
             <div id=" profile-dropdown-menu"
               class="hidden bg-white block z-20 shadow-lg py-6 px-6 rounded sm:min-w-[320px] max-sm:min-w-[250px] absolute right-0 top-10">
               <h6 class="font-semibold text-[15px]">Welcome</h6>
@@ -91,7 +100,9 @@
             </div>
           </li>
         </ul>
-  
+        <form method="POST" action="">
+        <button type="submit" name="logout" class="bg-red-500 text-white p-2 rounded absoult">Logout</button>
+    </form>
         <button id="toggleOpen" class='lg:hidden ml-7'>
           <svg class="w-7 h-7" fill="#000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
