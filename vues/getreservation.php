@@ -2,6 +2,18 @@
 <?php
 session_start();
 require("../database.php");
+  
+if (isset($_SESSION['roles'])) {
+  if ($_SESSION['roles'] == 0) {
+      header('Location: ../vues/login.php');
+      exit;
+  }
+ } 
+ if (!isset($_SESSION['roles']) || $_SESSION['roles'] === null || $_SESSION['roles'] === '') {
+  header('Location: ../vues/login.php');
+  exit;
+}
+
 $email = $_SESSION['email'];
 $query = $pdo->prepare('SELECT * FROM users JOIN resvations on users.id = resvations.idClient where users.email = :email');
 $query->bindParam(':email', $email, PDO::PARAM_STR); 

@@ -13,8 +13,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date']) && isset($_PO
     
 }
 
-
-
+  
+if (isset($_SESSION['roles'])) {
+    if ($_SESSION['roles'] == 1) {
+        header('Location: ../vues/login.php');
+        exit;
+    }
+   } 
+   if (!isset($_SESSION['roles']) || $_SESSION['roles'] === null || $_SESSION['roles'] === '') {
+    header('Location: ../vues/login.php');
+    exit;
+  }
     
 ?>
 <section class="dark:bg-dark bg-white py-[70px]">

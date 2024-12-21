@@ -5,6 +5,7 @@ include '../database.php';
 $matricule = isset($_POST['matricule']) && $_POST['matricule'] !== '' ? $_POST['matricule'] : NULL;
   $Specialite = isset($_POST['Specialite']) && $_POST['Specialite'] !== '' ? $_POST['Specialite'] : NULL;
   
+ 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // if (empty($_POST['name']) || empty($_POST['password']) || empty($_POST['age']) || empty($_POST['email']) || empty($_POST['number']) || empty($_POST['Specialite']) || empty($matricule)) {
@@ -54,7 +55,7 @@ if ($sqlusers) {
 
 $Listusers = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
 
-require '../vues/nav.php';
+// require '../vues/nav.php';
 
 ?>
 
@@ -62,6 +63,7 @@ require '../vues/nav.php';
 
 
 
+<script src="https://cdn.tailwindcss.com"></script>
 
 <div id="alert-2" class="fixed hidden top-4 right-4 z-50 flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 shadow-lg transform transition duration-300 ease-in-out scale-100 hover:scale-105" role="alert">
     <svg class="flex-shrink-0 w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -166,7 +168,7 @@ require '../vues/nav.php';
       </div>
     </div>
         <?php
-include '../vues/footer.php';
+// include '../vues/footer.php';
 ?>
 </html>
 </body>

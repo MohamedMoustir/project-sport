@@ -2,7 +2,19 @@
 <?php
 session_start();
 require("../database.php");
-include "../vues/nav.php";
+
+  
+if (isset($_SESSION['roles'])) {
+    if ($_SESSION['roles'] == 0) {
+        header('Location: ../vues/login.php');
+        exit;
+    }
+   } 
+
+   if (!isset($_SESSION['roles']) || $_SESSION['roles'] === null || $_SESSION['roles'] === '') {
+    header('Location: ../vues/login.php');
+    exit;
+  }
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -42,6 +54,7 @@ if ($sqlusers) {
 }
 
 }
+include "../vues/nav.php";
 
 
 ?>

@@ -7,6 +7,20 @@ if (isset($_POST['logout'])) {
   header("location:../vues/login.php");
   exit();
  }
+
+  
+ if (isset($_SESSION['roles'])) {
+  if ($_SESSION['roles'] == 1 || $_SESSION['roles'] !== 0) {
+      header('Location: ../vues/login.php');
+      exit;
+  }
+ } 
+ if (!isset($_SESSION['roles']) || $_SESSION['roles'] === null || $_SESSION['roles'] === '') {
+  header('Location: ../vues/login.php');
+  exit;
+}
+
+
 require("../database.php");
 $email = $_SESSION['email'];
 $query = $pdo->prepare('SELECT * FROM resvations JOIN users on users.id = resvations.idAvocat where users.email = :email');

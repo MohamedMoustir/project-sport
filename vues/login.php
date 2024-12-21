@@ -5,6 +5,7 @@
       session_start(); 
   }
   
+ 
   
     require_once "../database.php";
 
@@ -25,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
                 $_SESSION['id'] =$user->id;
                 $_SESSION['email'] =$user->email;
                 $_SESSION['password'] =$user->password;
-                $_SESSION['roles'] =$user->reles;
+                $_SESSION['roles'] =$user->roles;
 
                 if ($user->roles == 0) {
                    header('Location:../vues/Account_avocat.php');
@@ -50,6 +51,7 @@ ob_end_flush();
 // require_once '../vues/nav.php';    
 
 ?>
+    <script src="https://cdn.tailwindcss.com"></script>
 
 <div class="">
       <div class="grid lg:grid-cols-2 gap-4 max-lg:gap-12 bg-gradient-to-r from-blue-500 to-blue-700 px-8 py-12 h-[320px]">

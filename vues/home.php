@@ -2,11 +2,26 @@
 
 <?php
 session_start();
-require_once '../vues/nav.php';
 require("../database.php");
 
 $ListAvocat = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecialite = specialite.idSP ')->fetchAll(PDO::FETCH_OBJ);
 // $Listusers = $pdo->query('SELECT * FROM specialite')->fetchAll(PDO::FETCH_OBJ);
+echo $_SESSION['roles'];
+if (isset($_SESSION['roles'])) {
+ if ($_SESSION['roles'] == 0) {
+     header('Location: ../vues/login.php');
+     exit;
+ }
+ if (!isset($_SESSION['roles']) || $_SESSION['roles'] === null || $_SESSION['roles'] === '') {
+  header('Location: ../vues/login.php');
+  exit;
+}
+} 
+if (!isset($_SESSION['roles']) || $_SESSION['roles'] === null || $_SESSION['roles'] === '') {
+  header('Location: ../vues/login.php');
+  exit;
+}
+require_once '../vues/nav.php';
 
 ?>
 

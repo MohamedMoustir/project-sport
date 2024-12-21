@@ -1,14 +1,24 @@
 
 
 <?php
-
 require("../database.php");
 
 $Listusers = $pdo->query('SELECT * FROM users')->fetchAll(PDO::FETCH_OBJ);
 
 $usersCount = $pdo->query('SELECT COUNT(*) AS row_count FROM users')->fetch(PDO::FETCH_ASSOC);
 
-echo  . $usersCount['row_count'];
+  
+if (isset($_SESSION['roles'])) {
+    if ($_SESSION['roles'] == 1) {
+        header('Location: ../vues/login.php');
+        exit;
+    }
+   } 
+
+   if (!isset($_SESSION['roles']) || $_SESSION['roles'] === null || $_SESSION['roles'] === '') {
+    header('Location: ../vues/login.php');
+    exit;
+  }
 
 ?>
 
