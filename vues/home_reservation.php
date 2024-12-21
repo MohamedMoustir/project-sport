@@ -35,13 +35,7 @@ if (isset($_GET['id'])) {
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//  echo '<script>
-//  let events = JSON.parse(localStorage.getItem("events")) || [];
-//  events.forEach(date => {
-//  date.date;
-//  })
-//  console.log(date)
-//   </script>';
+
 
 $sqlusers = $pdo->prepare("INSERT INTO resvations (idClient, DateReservation,idAvocat) VALUES (?, ?,?)");
 $name = $_SESSION["id"];
@@ -144,7 +138,7 @@ document.getElementById('saveEvent').addEventListener('click', () => {
     const date = document.getElementById('eventDate').value;
 
     if (title && date) {
-        events.push({ title, date });
+        // events.push({ title, date });
         localStorage.setItem('events', JSON.stringify(events));
         
         closeModal();

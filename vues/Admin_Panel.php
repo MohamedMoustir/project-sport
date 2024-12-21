@@ -2,12 +2,9 @@
 
 <?php
 require("../database.php");
-
 $Listusers = $pdo->query('SELECT * FROM users')->fetchAll(PDO::FETCH_OBJ);
-
 $usersCount = $pdo->query('SELECT COUNT(*) AS row_count FROM users')->fetch(PDO::FETCH_ASSOC);
 
-  
 if (isset($_SESSION['roles'])) {
     if ($_SESSION['roles'] == 1) {
         header('Location: ../vues/login.php');
@@ -43,8 +40,9 @@ if (isset($_SESSION['roles'])) {
         <div class = "flex-none h-full text-center flex items-center justify-center">
             
         <form method="POST" action="">
-        <button type="submit" name="logout" class=" text-white p-2 rounded absoult">Logout</button>
+        <button type="submit" name="logout" class="text-blue-800 border font bold p-2 rounded absoult">Logout</button>
     </form>
+                
                 
         </div>
     </div>

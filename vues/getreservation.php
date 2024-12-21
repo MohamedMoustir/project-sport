@@ -31,17 +31,7 @@ if (isset($_GET['delete'])) {
   }
 }
 
-if (isset($_GET['Edite'])) {
-//   $name = $_SESSION["id"];
-//   $idAvocat = $id = $_GET['id'];
-//   $id = $_GET['Edite'];
-//   $query = $pdo->prepare("UPDATE resvations SET
-//    idClient = '$name',
-//     DateReservation='$_POST['label']',
-//     idAvocat ='$idAvocat',
-// ");
-//   $query->execute();
-  }
+
 
 require_once '../vues/nav.php';
 
@@ -115,21 +105,15 @@ require_once '../vues/nav.php';
              $hidden = 'hidden'; ?>
                   
             
-            <button id="Delete" class="<?= $hidden ?> inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md transition duration-200 ease-in-out">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-              
-              <a href="../vues/getreservation.php?delete=<?= $list->idResvations ?>" onclick="reload()">Delete</a>
-              
-            </button>
-            <!-- Confirm Button -->          
-            <button id="confirm" class="<?= $hidden ?> inline-flex items-center px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md transition duration-200 ease-in-out">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
-              </svg>
-              <a href="../vues/getreservation.php?confirm=<?= $list->idResvations ?>">confirm</a>
-            </button>
+                  <div class="action-buttons">
+                  <div class="action-buttons">
+  <button id="response-btn" class="<?= $hidden ?>   btn flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" onclick="changeButton()">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5" />
+    </svg>
+    N'a pas répondu
+  </button>
+</div>
 
             <button class="flex items-center space-x-2 px-4 py-2 bg-green-500 text-white text-lg font-medium rounded-lg shadow hover:bg-green-600 transition duration-300">
           <i class="fa-solid fa-check"></i>
@@ -141,40 +125,28 @@ require_once '../vues/nav.php';
              
              ?>
              
-             <button id="Delete" class="<?= $hidden ?> inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md transition duration-200 ease-in-out">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-              <a href="../vues/getreservation.php?delete=<?= $list->idResvations ?>" onclick="reload()">Delete</a>
-              
-            </button>
-            <!-- Confirm Button -->          
-            <button id="confirm" class="<?= $hidden ?> inline-flex items-center px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md transition duration-200 ease-in-out">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
-              </svg>
-              <a href="../vues/getreservation.php?confirm=<?= $list->idResvations ?>">confirm</a>
-            </button>
+             <div class="action-buttons">
+  <button id="response-btn" class=" <?= $hidden ?>  btn flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" onclick="changeButton()">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5" />
+    </svg>
+    N'a pas répondu
+  </button>
+</div>
 
                  <?php  endif;?>  
                  <?php  if ($list->statuss == 'refuser'):
              $hidden = 'hidden'; 
              
              ?>
-           <button id="Delete" class="<?= $hidden ?> inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md transition duration-200 ease-in-out">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-              
-              <a href="../vues/getreservation.php?delete=<?= $list->idResvations ?>" onclick="reload()">Delete</a>
-              
-            </button>
-            <!-- Confirm Button -->          
-            <button id="confirm" class="<?= $hidden ?> inline-flex items-center px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md transition duration-200 ease-in-out">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
-              </svg>
-              <a href="../vues/getreservation.php?confirm=<?= $list->idResvations ?>">confirm</a>
+  <div class="action-buttons">
+  <button id="response-btn" class="<?= $hidden ?>  btn flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" onclick="changeButton()">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5" />
+    </svg>
+    N'a pas répondu
+  </button>
+</div>
             </button>
 <button class="flex items-center  gap-2 px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -197,9 +169,10 @@ require_once '../vues/nav.php';
 
 <script>
   function confir() {
-    alert('ee')
+    
     document.getElementById('confirm').remove();
     }
+
 </script>
 </body>
 </html>
