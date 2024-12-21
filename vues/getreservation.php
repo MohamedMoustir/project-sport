@@ -2,7 +2,6 @@
 <?php
 session_start();
 require("../database.php");
-require_once '../vues/nav.php';
 $email = $_SESSION['email'];
 $query = $pdo->prepare('SELECT * FROM users JOIN resvations on users.id = resvations.idClient where users.email = :email');
 $query->bindParam(':email', $email, PDO::PARAM_STR); 
@@ -14,7 +13,10 @@ if (isset($_GET['delete'])) {
   $query = $pdo->prepare("DELETE FROM resvations WHERE idResvations = :id");
   $query->bindParam(':id', $id, PDO::PARAM_INT);
   $query->execute();
-  
+  if ($query) {
+    header("Location: ../vues/getreservation.php?id=" .$id);
+    exit;
+  }
 }
 
 if (isset($_GET['Edite'])) {
@@ -28,6 +30,9 @@ if (isset($_GET['Edite'])) {
 // ");
 //   $query->execute();
   }
+
+require_once '../vues/nav.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -120,7 +125,10 @@ if (isset($_GET['Edite'])) {
              </button>
             <?php  endif;?>
             <?php  if ($list->statuss == 'still'):
-             $hidden = 'block'; ?>
+             $hidden = 'block'; 
+             
+             ?>
+             
              <button id="Delete" class="<?= $hidden ?> inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md transition duration-200 ease-in-out">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -137,8 +145,35 @@ if (isset($_GET['Edite'])) {
             </button>
 
                  <?php  endif;?>  
+                 <?php  if ($list->statuss == 'refuser'):
+             $hidden = 'hidden'; 
+             
+             ?>
+           <button id="Delete" class="<?= $hidden ?> inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md transition duration-200 ease-in-out">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              
+              <a href="../vues/getreservation.php?delete=<?= $list->idResvations ?>" onclick="reload()">Delete</a>
+              
+            </button>
+            <!-- Confirm Button -->          
+            <button id="confirm" class="<?= $hidden ?> inline-flex items-center px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md transition duration-200 ease-in-out">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+              </svg>
+              <a href="../vues/getreservation.php?confirm=<?= $list->idResvations ?>">confirm</a>
+            </button>
+<button class="flex items-center  gap-2 px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M10 0a10 10 0 100 20A10 10 0 0010 0zm-1.5 5a1.5 1.5 0 013 0v5a1.5 1.5 0 01-3 0V5zm1.5 9.25a1.25 1.25 0 100-2.5 1.25 1.25 0 000 2.5z" />
+    </svg>
+    Reject
+</button>
+
             <?php  endif;?>
-            
+            <?php  endif;?>
+
 
             
           </div>

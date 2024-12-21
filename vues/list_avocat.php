@@ -3,28 +3,43 @@
 
 <?php 
 session_start();
-require_once '../vues/nav.php';
+
 require("../database.php");
 $email = $_SESSION['email'];
 $query = $pdo->prepare('SELECT * FROM users JOIN resvations on users.id = resvations.idAvocat where users.email = :email');
 $query->bindParam(':email', $email, PDO::PARAM_STR); 
 $query->execute();
 $Listusers = $query->fetchAll(PDO::FETCH_OBJ); 
+// var_dump($_GET['id']);
+if (  isset($_POST['Cancel'])&& isset($_GET['id'])) {
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Cancel'])) {
 $id = $_GET['id'];
-  $query = $pdo->prepare("UPDATE resvations SET statuss ='Cancel' where idResvations = :id");
+
+  $query = $pdo->prepare("UPDATE resvations SET statuss ='refuser' where idResvations = :id");
   $query->bindParam(':id', $id, PDO::PARAM_STR); 
   $query->execute();
   if ($query) {
-    echo $id;
+    header("Location: ../vues/list_avocat.php?id=" . $list->idResvations);
+    exit;
   }
   
 }
 
-if (isset($_POST['Confirm'])) {
- 
+if ( isset($_POST['Confirm'])&& isset($_GET['id'])) {
+  var_dump($_GET['id']);
+$id = $_GET['id'];
+  $query = $pdo->prepare("UPDATE resvations SET statuss ='confirm' where idResvations = :id");
+  $query->bindParam(':id', $id, PDO::PARAM_STR); 
+  $query->execute();
+  if ($query) {
+    header("Location: ../vues/list_avocat.php?id=" . $list->idResvations);
+    exit;
+  }
+  
 }
+
+require_once '../vues/nav.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,7 +102,7 @@ if (isset($_POST['Confirm'])) {
         
         
         ?>
-      <form method="POST" class="mt-6 flow-root sm:mt-8" >
+      <form method="POST" action="../vues/list_avocat.php?id=<?= $list->idResvations?>" class="mt-6 flow-root sm:mt-8" >
         <div class="divide-y divide-gray-200 dark:divide-gray-700">
           <div class="flex flex-wrap items-center gap-y-4 py-6">
             <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
@@ -118,7 +133,7 @@ if (isset($_POST['Confirm'])) {
             </dl>
 
             <div class="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-4">
-              <a href="../vues/list_avocat.php?id=<?= $list->idResvations?>" name="Cancel" type="submit" class="w-full rounded-lg border border-red-700 px-3 py-2 text-center text-sm font-medium text-red-700 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-900 lg:w-auto">Cancel</a>
+              <button  name="Cancel" type="submit" class="w-full rounded-lg border border-red-700 px-3 py-2 text-center text-sm font-medium text-red-700 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-900 lg:w-auto">Cancel</button>
               <button name="Confirm" type="submit" class="w-full inline-flex justify-center rounded-lg  border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 lg:w-auto">Confirm</button>
             </div>
           </div>

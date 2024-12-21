@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
       try {
           $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
           $stmt->execute(['email' => $email]);
-
           $user = $stmt->fetch(PDO::FETCH_OBJ);
 
           if ($user) {
@@ -24,12 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
                 $_SESSION['password'] =$user->password;
                 $_SESSION['roles'] =$user->reles;
 
-                
                 if ($user->roles == 1) {
-                   header('Location: ../vues/Account_avocat.php');
+                   header('Location:../vues/Account_avocat.php');
                      exit();
                 }else{
-                  header('Location: ../vues/home.php');
+                  header('Location:../vues/home.php');
+                  exit();
                 }
               } else {
                   echo "Incorrect password.";

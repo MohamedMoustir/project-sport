@@ -97,7 +97,7 @@ require '../vues/nav.php';
               Vous êtes un utilisateur
             </button>
      
-            <input type="hidden" name="roles" id="pass">
+            <input value="1" type="hidden" name="roles" id="pass">
         <!-- <button type="submit" class="hidden">Submit</button> -->
           </div>
 
@@ -135,9 +135,9 @@ require '../vues/nav.php';
               <label class="text-gray-800 text-sm mb-2 block">matricule</label>
               <input  value="" name="matricule" type="number" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter password" />
             </div>
-            <div >
-            <label class="text-gray-800 text-sm mb-2 block">Specialite</label>
-              <select id="Special" name="Specialite"  class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all">
+            <div id="Special">
+            <label  class="text-gray-800 text-sm mb-2 block">Specialite</label>
+              <select  name="Specialite"  class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all">
               <option></option>
               <?php foreach($Listusers as $list): ?>
              <option value="<?= $list->idSP ?>"><?= $list->label ?></option>
