@@ -43,21 +43,21 @@ require_once '../vues/nav.php';
     <title>Document</title>
 </head>
 <body>
-<div class=" overflow-x-auto my-[50px] mx-[50px]">
-    <!-- ====== Page Title Section Start -->
 <section class="dark:bg-dark bg-white py-[70px]">
    <div class="mx-auto px-4 sm:container">
-      <div class="border-primary border-l-[5px] pl-5">
-         <h2 class="text-dark mb-2 text-2xl font-semibold dark:text-white">
-            States Statistics
+      <div class="border-l-[5px] border-green-500 pl-5">
+         <h2 class="text-dark mb-4 text-3xl font-bold dark:text-white">
+            Liste des Réservations
          </h2>
-         <p class="text-body-color dark:text-dark-6 text-sm font-medium">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-            ultrices lectus sem.
+         <p class="text-body-color dark:text-dark-6 text-base font-medium leading-relaxed mb-4">
+            Voici la liste des réservations récentes. Vous pouvez voir les détails de chaque réservation ci-dessous.
          </p>
+
       </div>
    </div>
 </section>
+
+
 <!-- ====== Page Title Section End -->
 <table class="min-w-full bg-white border-collapse border border-gray-200">
   <thead class="bg-gray-800 text-white">

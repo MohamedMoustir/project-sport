@@ -1,17 +1,35 @@
 
 
 <?php
-
+session_start();
 require("../database.php");
 require_once "../vues/Admin_Panel.php";
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date']) && isset($_POST['title'])) {
-  
-  $sqlusers = $pdo->prepare("INSERT INTO disponibilty( datadebut, title) VALUES (?,?)");
-    $sqlusers->execute([$_POST['date'],$_POST['title']]);
+    $userEmail = isset($_SESSION['email']) ? $_SESSION['email'] : null;
+
+    $sqlusers = $pdo->prepare("INSERT INTO disponibilty (datadebut, title, user_email) VALUES (?, ?, ?)");
+    $sqlusers->execute([$_POST['date'], $_POST['title'], $userEmail]);
+    
 }
-   
+
+
+
     
 ?>
+<section class="dark:bg-dark bg-white py-[70px]">
+   <div class="mx-auto px-4 sm:container">
+      <div class="border-l-[5px] border-green-500 pl-5">
+         <h2 class="text-dark mb-4 text-3xl font-bold dark:text-white">
+            Agenda de travail
+         </h2>
+         <p class="text-body-color dark:text-dark-6 text-base font-medium leading-relaxed">
+            Voici le planning de nos tâches quotidiennes. Vous pouvez suivre les tâches, réunions et rendez-vous importants dans cet agenda.
+         </p>
+      </div>
+   </div>
+</section>
+
 
 <div class=" flex items-center justify-center h-[500px]">
     <div class="lg:w-7/12 md:w-9/12 sm:w-10/12 mx-auto p-4">
@@ -22,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date']) && isset($_PO
                 <button id="nextMonth" class="text-white">Next</button>
             </div>
             <div class="grid grid-cols-7 gap-2 p-4" id="calendar">
+
             </div>
             <div id="myModal" class="modal hidden fixed inset-0 flex items-center justify-center z-50">
                 <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>

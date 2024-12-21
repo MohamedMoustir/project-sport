@@ -58,7 +58,7 @@ $ListAvocat = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecia
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-sm:gap-8">
           
         <?php foreach($ListAvocat as $list) :
-          if ($list->roles == 1) {
+          if ($list->roles == 0) {
 
          
           ?>
@@ -77,62 +77,7 @@ $ListAvocat = $pdo->query('SELECT * FROM users JOIN specialite on users.idSpecia
 <div>
 </section>
 <section>
-<div id='reservation_form'  class="hidden fixed top-0  left-[50%] -translate-x-2/4  z-500 max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
-    <div class="text-2xl py-4 px-6 bg-gray-900 text-white text-center font-bold uppercase">
-         Appointment
-    </div>
-    <form class="py-4 px-6" action="" method="POST">
-        
-        <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2" for="email">
-                Email
-            </label>
-            <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="email" type="email" placeholder="Enter your email">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2" for="date">
-                Date
-            </label>
-            <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="date" type="date" placeholder="Select a date">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2" for="time">
-                Time
-            </label>
-            <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="time" type="time" placeholder="Select a time">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2" for="service">
-                Service
-            </label>
-            <select
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="service" name="service">
-                <option value="">Select a service</option>
-                <?php foreach($Listusers as $list): ?>
-             <option value="<?= $list->idSP ?>"><?= $list->label ?></option>
-        <?php endforeach; ?>
-                
-            </select>
-        </div>
-        
-        <div class="flex items-center justify-center mb-4">
-            <button 
-                class="bg-gray-900 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline"
-                type="submit">
-                Appointment
-            </button>
-        </div>
 
-    </form>
-
-</div>
 
 </div>
 </section>

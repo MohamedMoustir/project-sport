@@ -1,12 +1,17 @@
 
 
 <?php
+
 require("../database.php");
 
- $Listusers = $pdo->query('SELECT * FROM users')->fetchAll(PDO::FETCH_OBJ);
+$Listusers = $pdo->query('SELECT * FROM users')->fetchAll(PDO::FETCH_OBJ);
 
+$usersCount = $pdo->query('SELECT COUNT(*) AS row_count FROM users')->fetch(PDO::FETCH_ASSOC);
+
+echo  . $usersCount['row_count'];
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,15 +32,9 @@ require("../database.php");
         <div class = "grow h-full flex items-center justify-center"></div>
         <div class = "flex-none h-full text-center flex items-center justify-center">
             
-                <div class = "flex space-x-3 items-center px-3">
-                    <div class = "flex-none flex justify-center">
-                    <div class="w-8 h-8 flex ">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShta_GXR2xdnsxSzj_GTcJHcNykjVKrCBrZ9qouUl0usuJWG2Rpr_PbTDu3sA9auNUH64&usqp=CAU" alt="profile" class="shadow rounded-full object-cover" />
-                    </div>
-                    </div>
-
-                    <div class = "hidden md:block text-sm md:text-md text-black dark:text-white">John Doe</div>
-                </div>
+        <form method="POST" action="">
+        <button type="submit" name="logout" class=" text-white p-2 rounded absoult">Logout</button>
+    </form>
                 
         </div>
     </div>
@@ -92,7 +91,7 @@ require("../database.php");
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
                 </svg>                      
                 <div>
-                    Table
+                <a href="../vues/list_avocat.php">  Table</a>
                 </div>
             </div>
             <div class =  "hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
@@ -139,7 +138,7 @@ require("../database.php");
                 <li>
                     <div class = "flex items-center">
                         <svg class = "w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path></svg>
-                        <a href="../vues/list_avocat.php?email=profile" class = "ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">table</a>
+                        <a href="../vues/list_avocat.php" class = "ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">table</a>
                     </div>
                 </li>
             </ol>

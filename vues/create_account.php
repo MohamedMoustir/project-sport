@@ -97,8 +97,8 @@ require '../vues/nav.php';
               Vous êtes un utilisateur
             </button>
      
-            <input value="1" type="hidden" name="roles" id="pass">
-        <!-- <button type="submit" class="hidden">Submit</button> -->
+            <input value="1" type="text" name="roles" id="pass" class="hidden">
+        <!-- <button type="submit" class="hidden">Submit</button> --> 
           </div>
 
           <div
@@ -151,10 +151,10 @@ require '../vues/nav.php';
               <input  name="avatar" type="file" class="bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter password" />
             </div>
           </div>
-          <div >
+          <!-- <div >
               <label class=" hidden text-gray-800 text-sm mb-2 block"></label>
-              <input id="pass" value="1" name="roles" type="text" class=" hidden bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter " />
-            </div>
+              <input id="pass" value="0" name="roles" type="text" class="  bg-gray-100 focus:bg-transparent w-full text-sm text-gray-800 px-4 py-3 rounded-md outline-blue-500 transition-all" placeholder="Enter " />
+            </div> -->
 
           <div class="mt-8">
     
@@ -174,7 +174,68 @@ include '../vues/footer.php';
 <script src="../main.js" ></script>
 <script>
  
+ function getvalue(value){
+    if (value == "utilisateur") {
+      
+        document.getElementById("matricule").style.display="none";
+        document.getElementById("Mobile").style.display="none";
+        document.getElementById("Inscription").textContent="Inscription utilisateur";
+        document.getElementById("Special").style.display="none";
+        document.getElementById("avatar").style.display="none";
 
+        document.getElementById("pass").value = 1;
+     
+    }else{
+        document.getElementById("matricule").style.display="block";
+        document.getElementById("Mobile").style.display="block";
+        document.getElementById("Inscription").textContent="Inscription avocat";
+        document.getElementById("Special").style.display="block";
+        document.getElementById("pass").value = 0;
+        document.getElementById("avatar").style.display="block";
+
+       
+       
+    }
+}
+
+ document.getElementById('myForm').addEventListener('submit', function(event) {
+    var email = document.querySelector('[name="email"]').value;
+    var number = document.querySelector('[name="number"]').value;
+    var password = document.querySelector('[name="password"]').value;
+    var matricule = document.querySelector('[name="matricule"]').value;
+
+    var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    var phoneRegex = /^[+]?[0-9]{10,15}$/;
+    var passwordRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    var matriculeRegex = /^\d{2}$/;
+
+    if (!emailRegex.test(email)) {
+        event.preventDefault();
+        document.getElementById('alert-2').style.display = 'flex';
+      document.getElementById('alert').innerHTML = 'Veuillez entrer un email valide.';
+        }
+     if (value == 1) {
+    if (!phoneRegex.test(number)) {
+        event.preventDefault();
+        document.getElementById('alert-2').style.display = 'flex';
+      document.getElementById('alert').innerHTML = 'Veuillez entrer un numéro de téléphone valide.';
+      
+    } 
+     }
+    if (!passwordRegex.test(password)) {
+      document.getElementById('alert-2').style.display = 'flex';
+      document.getElementById('alert').innerHTML = 'Votre mot de passe doit contenir des lettres majuscules, minuscules, des chiffres et des symboles.';
+         }
+         if (value == 1) {
+          
+   
+    if (!matriculeRegex.test(matricule)) {
+        event.preventDefault();
+        document.getElementById('alert-2').style.display = 'flex';
+      document.getElementById('alert').innerHTML = 'Le matricule doit être un numéro valide de 6 à 10 chiffres.';
+       }
+      }
+});
 
 </script>
 </body>

@@ -1,12 +1,13 @@
 <?php
 
+ 
+if (isset($_POST['logout'])) {
+  session_unset(); 
+  session_destroy(); 
+  header("location:../vues/login.php");
+  exit();
+ }
 
-// if (isset($_POST['logout'])) {
-//   session_unset(); 
-//   session_destroy(); 
-//   exit();
-//   // header("location:../vues/login.php");
-// }
 ?>
 
 <!DOCTYPE html>
@@ -101,7 +102,7 @@
           </li>
         </ul>
         <form method="POST" action="">
-        <button type="submit" name="logout" class="bg-red-500 text-white p-2 rounded absoult">Logout</button>
+        <button type="submit" name="logout" class="bg-blue-500 text-white p-2 rounded absoult">Logout</button>
     </form>
         <button id="toggleOpen" class='lg:hidden ml-7'>
           <svg class="w-7 h-7" fill="#000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

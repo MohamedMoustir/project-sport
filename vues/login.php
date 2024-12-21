@@ -1,7 +1,11 @@
 
 <?php  
+
+  if (session_status() == PHP_SESSION_NONE) {
+      session_start(); 
+  }
   
- session_start();
+  
     require_once "../database.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_POST['password'])) {
@@ -23,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
                 $_SESSION['password'] =$user->password;
                 $_SESSION['roles'] =$user->reles;
 
-                if ($user->roles == 1) {
+                if ($user->roles == 0) {
                    header('Location:../vues/Account_avocat.php');
                      exit();
                 }else{
@@ -43,16 +47,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
 }
 
 ob_end_flush();
-require_once '../vues/nav.php';    
+// require_once '../vues/nav.php';    
 
 ?>
 
 <div class="">
       <div class="grid lg:grid-cols-2 gap-4 max-lg:gap-12 bg-gradient-to-r from-blue-500 to-blue-700 px-8 py-12 h-[320px]">
         <div>
-          <a href="javascript:void(0)"><img
-            src="https://readymadeui.com/readymadeui-white.svg" alt="logo" class='w-40' />
-          </a>
+         
           <div class="max-w-lg mt-16 max-lg:hidden">
             <h3 class="text-3xl font-bold text-white">Sign in</h3>
             <p class="text-sm mt-4 text-white">Embark on a seamless journey as you sign in to your account. Unlock a realm of opportunities and possibilities that await you.</p>
@@ -131,7 +133,7 @@ require_once '../vues/nav.php';
            Log in
               </button>
             </div>
-            <p class="text-sm mt-8 text-center text-gray-800">Don't have an account <a href="javascript:void(0);" class="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap">Register here</a></p>
+            <p class="text-sm mt-8 text-center text-gray-800">Don't have an account <a href="../vues/create_account.php" class="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap">Register here</a></p>
           </form>
         </div>
       </div>
