@@ -2,8 +2,24 @@
 
 <?php
 require("../database.php");
+
 $Listusers = $pdo->query('SELECT * FROM users')->fetchAll(PDO::FETCH_OBJ);
-$usersCount = $pdo->query('SELECT COUNT(*) AS row_count FROM users')->fetch(PDO::FETCH_ASSOC);
+$email = $_SESSION['email'];
+   $usersCount = $pdo->prepare('SELECT COUNT(*) AS row_count FROM users join resvations on  users.id = resvations.idAvocat  where users.email = :email');
+   $usersCount->bindParam(':email', $email, PDO::PARAM_STR);  
+    $usersCount->execute();
+    $row = $usersCount->fetch(PDO::FETCH_ASSOC);
+
+    if (isset($_SESSION['email'])) {
+        $email = $_SESSION['email'];
+    
+    $emai = $_SESSION['email'];
+    $Countreservation = $pdo->prepare("SELECT COUNT(*) AS row_count FROM resvations join users on  users.id = resvations.idAvocat  where users.email = :email and statuss = 'confirm' ");
+    $Countreservation->bindParam(':email', $email, PDO::PARAM_STR);
+   $Countreservation->execute();
+   $rows = $Countreservation->fetch(PDO::FETCH_ASSOC);
+    }
+   
 
 if (isset($_SESSION['roles'])) {
     if ($_SESSION['roles'] == 1) {
@@ -161,10 +177,10 @@ if (isset($_SESSION['roles'])) {
                     </div>
                     <div class = "flex flex-col justify-around flex-grow ml-5 text-white">
                         <div class = "text-xs whitespace-nowrap">
-                            Total User
+                            Total Reservation
                         </div>
                         <div class = "">
-                            100
+                          <?php echo $row['row_count']; ?>
                         </div>
                     </div>
                     <div class = " flex items-center flex-none text-white">
@@ -184,10 +200,10 @@ if (isset($_SESSION['roles'])) {
                     </div>
                     <div class = "flex flex-col justify-around flex-grow ml-5 text-white">
                         <div class = "text-xs whitespace-nowrap">
-                            Total Product
+                            Total Reservation confirmed
                         </div>
                         <div class = "">
-                            500
+                           <?php echo $rows['row_count'];?>
                         </div>
                     </div>
                     <div class = " flex items-center flex-none text-white">

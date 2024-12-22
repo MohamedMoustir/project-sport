@@ -1,6 +1,7 @@
 
 <?php 
 session_start();
+require("../database.php");
 if (isset($_POST['logout'])) {
   session_unset(); 
   session_destroy(); 
@@ -21,7 +22,7 @@ if (isset($_POST['logout'])) {
 }
 
 
-require("../database.php");
+
 $email = $_SESSION['email'];
 $query = $pdo->prepare('SELECT * FROM resvations JOIN users on users.id = resvations.idAvocat where users.email = :email');
 $query->bindParam(':email', $email, PDO::PARAM_STR); 
@@ -41,7 +42,7 @@ if (  isset($_POST['Cancel'])&& isset($_GET['id'])) {
 }
 
 if ( isset($_POST['Confirm'])&& isset($_GET['id'])) {
-  var_dump($_GET['id']);
+
 $id = $_GET['id'];
   $query = $pdo->prepare("UPDATE resvations SET statuss ='confirm' where idResvations = :id");
   $query->bindParam(':id', $id, PDO::PARAM_STR); 
@@ -51,6 +52,8 @@ $id = $_GET['id'];
     exit;
   }
 
+  // count
+  
   
 }
 
