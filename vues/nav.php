@@ -1,26 +1,27 @@
 <?php
 
- 
+
 if (isset($_POST['logout'])) {
-  session_unset(); 
-  session_destroy(); 
+  session_unset();
+  session_destroy();
   header("location:../vues/login.php");
   exit();
- }
+}
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bungee+Spice&family=Geist+Mono:wght@100..900&family=Itim&family=Lilita+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Parkinsans:wght@300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rowdies:wght@300;400;700&family=Rubik+Wet+Paint&family=Unlock&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>AvocatConnect </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bungee+Spice&family=Geist+Mono:wght@100..900&family=Itim&family=Lilita+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Parkinsans:wght@300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rowdies:wght@300;400;700&family=Rubik+Wet+Paint&family=Unlock&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>AvocatConnect </title>
 </head>
 <style>
   body {
@@ -30,11 +31,11 @@ if (isset($_POST['logout'])) {
 
 <body class="font-montserrat">
 
-<header class='flex shadow-md  bg-[#282E3F] text-white   relative z-50'>
+  <header class='flex shadow-md  bg-[#282E3F] text-white   relative z-50'>
     <div class='flex flex-wrap items-center justify-between lg:gap-y-4 gap-y-6 gap-x-4 w-full'>
       <a href=""><img src="../imgs/logo_white.png" alt="logo" class='w-6 ' />
       </a>
-  
+
       <div id="collapseMenu"
         class='max-lg:hidden relative lg:left-[20%] lg:!block max-lg:before:fixed max-lg:before:bg-black max-lg:before:opacity-40 max-lg:before:inset-0 max-lg:before:z-50'>
         <button id="toggleClose"
@@ -48,14 +49,14 @@ if (isset($_POST['logout'])) {
               data-original="#000000"></path>
           </svg>
         </button>
-  
+
         <ul
           class='lg:flex lg:gap-x-10 max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-2/3 max-lg:min-w-[300px] max-lg:top-0 lg:left-8 max-lg:p-4 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50'>
           <li class='mb-6 hidden max-lg:block'>
             <a href="javascript:void(0)"><img src="" alt="logo" class='w-36 bg-[#CA965C]' />
             </a>
           </li>
-        
+
           <li
             class=' max-lg:py-3 max-lg:px-3 relative lg:hover:after:absolute  lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:top-7 lg:after:transition-all lg:after:duration-300'>
             <a href='../vues/home.php' class='text-white font-bold block text-[15px]  rounded-full hover:bg-[#CA965C] px-[14px] py-[7px]'>Accueil
@@ -71,7 +72,7 @@ if (isset($_POST['logout'])) {
           </li>
         </ul>
       </div>
-  
+
       <div class=' flex items-center max-sm:ml-auto space-x-6 p-[40px]'>
         <ul>
           <li id=" profile-dropdown-toggle"
@@ -102,8 +103,8 @@ if (isset($_POST['logout'])) {
           </li>
         </ul>
         <form method="POST" action="">
-        <button type="submit" name="logout" class="bg-blue-500 text-white p-2 rounded absoult">Logout</button>
-    </form>
+          <button type="submit" name="logout" class="bg-blue-500 text-white p-2 rounded absoult">Logout</button>
+        </form>
         <button id="toggleOpen" class='lg:hidden ml-7'>
           <svg class="w-7 h-7" fill="#000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
@@ -115,4 +116,4 @@ if (isset($_POST['logout'])) {
     </div>
   </header>
 
-    <script src="../script/main.js" ></script>
+  <script src="../script/main.js"></script>

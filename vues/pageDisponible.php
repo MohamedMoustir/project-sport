@@ -1,5 +1,3 @@
-
-
 <?php
 session_start();
 require("../database.php");
@@ -10,33 +8,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date']) && isset($_PO
 
     $sqlusers = $pdo->prepare("INSERT INTO disponibilty (datadebut, title, user_email) VALUES (?, ?, ?)");
     $sqlusers->execute([$_POST['date'], $_POST['title'], $userEmail]);
-    
 }
 
-  
+
 if (isset($_SESSION['roles'])) {
     if ($_SESSION['roles'] == 1) {
         header('Location: ../vues/login.php');
         exit;
     }
-   } 
-   if (!isset($_SESSION['roles']) || $_SESSION['roles'] === null || $_SESSION['roles'] === '') {
+}
+if (!isset($_SESSION['roles']) || $_SESSION['roles'] === null || $_SESSION['roles'] === '') {
     header('Location: ../vues/login.php');
     exit;
-  }
-    
+}
+
 ?>
 <section class="dark:bg-dark bg-white py-[70px]">
-   <div class="mx-auto px-4 sm:container">
-      <div class="border-l-[5px] border-green-500 pl-5">
-         <h2 class="text-dark mb-4 text-3xl font-bold dark:text-white">
-            Agenda de travail
-         </h2>
-         <p class="text-body-color dark:text-dark-6 text-base font-medium leading-relaxed">
-            Voici le planning de nos tâches quotidiennes. Vous pouvez suivre les tâches, réunions et rendez-vous importants dans cet agenda.
-         </p>
-      </div>
-   </div>
+    <div class="mx-auto px-4 sm:container">
+        <div class="border-l-[5px] border-green-500 pl-5">
+            <h2 class="text-dark mb-4 text-3xl font-bold dark:text-white">
+                Agenda de travail
+            </h2>
+            <p class="text-body-color dark:text-dark-6 text-base font-medium leading-relaxed">
+                Voici le planning de nos tâches quotidiennes. Vous pouvez suivre les tâches, réunions et rendez-vous importants dans cet agenda.
+            </p>
+        </div>
+    </div>
 </section>
 
 
@@ -77,60 +74,63 @@ if (isset($_SESSION['roles'])) {
     </div>
 </div>
 
-    <script>
-     let events = JSON.parse(localStorage.getItem('events')) || [];
+<script>
+    let events = JSON.parse(localStorage.getItem('events')) || [];
 
-function openModal(date) {
-    document.getElementById('eventDate').value = date || '';
-    document.getElementById('eventTitle').value = '';
-    document.getElementById('myModal').classList.remove('hidden');
-}
-
-function closeModal() {
-    document.getElementById('myModal').classList.add('hidden');
-}
-
-document.getElementById('saveEvent').addEventListener('click', () => {
-    const title = document.getElementById('eventTitle').value;
-    const date = document.getElementById('eventDate').value;
-
-    if (title && date) {
-        events.push({ title, date });
-        localStorage.setItem('events', JSON.stringify(events));
-        
-        closeModal();
-        renderCalendar(); 
-    } else {
-        alert('Please fill in all fields!');
+    function openModal(date) {
+        document.getElementById('eventDate').value = date || '';
+        document.getElementById('eventTitle').value = '';
+        document.getElementById('myModal').classList.remove('hidden');
     }
-});
 
-document.getElementById('closeModal').addEventListener('click', closeModal);
+    function closeModal() {
+        document.getElementById('myModal').classList.add('hidden');
+    }
 
-function renderCalendar() {
-    const calendar = document.getElementById('calendar');
-    calendar.innerHTML = '';
+    document.getElementById('saveEvent').addEventListener('click', () => {
+        const title = document.getElementById('eventTitle').value;
+        const date = document.getElementById('eventDate').value;
 
-    const daysInMonth = new Date(2024, 12, 0).getDate(); 
+        if (title && date) {
+            events.push({
+                title,
+                date
+            });
+            localStorage.setItem('events', JSON.stringify(events));
 
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dateString = `2024-12-${String(day).padStart(2, '0')}`;
-        const dayEl = document.createElement('div');
-        dayEl.className = 'border p-2 text-center cursor-pointer';
-        dayEl.textContent = day;
-
-        if (events.some(event => event.date === dateString)) {
-            dayEl.classList.add('bg-red-500', 'text-white');
+            closeModal();
+            renderCalendar();
+        } else {
+            alert('Please fill in all fields!');
         }
+    });
 
-        dayEl.addEventListener('click', () => openModal(dateString));
-        calendar.appendChild(dayEl);
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+
+    function renderCalendar() {
+        const calendar = document.getElementById('calendar');
+        calendar.innerHTML = '';
+
+        const daysInMonth = new Date(2024, 12, 0).getDate();
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateString = `2024-12-${String(day).padStart(2, '0')}`;
+            const dayEl = document.createElement('div');
+            dayEl.className = 'border p-2 text-center cursor-pointer';
+            dayEl.textContent = day;
+
+            if (events.some(event => event.date === dateString)) {
+                dayEl.classList.add('bg-red-500', 'text-white');
+            }
+
+            dayEl.addEventListener('click', () => openModal(dateString));
+            calendar.appendChild(dayEl);
+        }
     }
-}
 
-renderCalendar();
-
-    </script>
-    <!-- <script src="../script/main.js" ></script> -->
+    renderCalendar();
+</script>
+<!-- <script src="../script/main.js" ></script> -->
 </body>
+
 </html>
