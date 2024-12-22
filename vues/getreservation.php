@@ -14,10 +14,34 @@ if (!isset($_SESSION['roles']) || $_SESSION['roles'] === null || $_SESSION['role
 }
 
 $email = $_SESSION['email'];
-$query = $pdo->prepare('SELECT * FROM users JOIN resvations on users.id = resvations.idClient where users.email = :email');
+$query = $pdo->prepare('SELECT * FROM users JOIN resvations on users.id = resvations.idClient  where users.email = :email');
 $query->bindParam(':email', $email, PDO::PARAM_STR);
 $query->execute();
 $Listusers = $query->fetchAll(PDO::FETCH_OBJ);
+
+$email = $_SESSION['email'];
+$query = $pdo->prepare('SELECT 
+    *
+FROM 
+    resvations r
+LEFT JOIN 
+    users u ON r.idClient = u.id
+LEFT JOIN 
+    specialite s ON u.idSpecialite = s.idSP
+WHERE 
+    u.email = :email');
+
+
+$query->bindParam(':email', $email, PDO::PARAM_STR);
+$query->execute();
+$Listusers = $query->fetchAll(PDO::FETCH_OBJ);
+
+
+// $stmt = $pdo->prepare('SELECT * FROM users  JOIN specialite on users.idSpecialite = specialite.idSP WHERE users.email = :email ');
+// $stmt->bindParam(':email', $email, PDO::PARAM_INT);
+// $stmt->execute();
+
+// $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (isset($_GET['delete'])) {
   $id = $_GET['delete'];
@@ -84,8 +108,8 @@ require_once '../vues/nav.php';
     </thead>
 
     <tbody class="whitespace-nowrap">
-      <?php foreach ($Listusers as $list): ?>
-        <tr class="even:bg-blue-50 hover:bg-gray-100">
+      <?php foreach ($Listusers as $list):   ; ?>
+      <tr class="even:bg-blue-50 hover:bg-gray-100">
           <td class="p-4 text-sm text-gray-700 border-b border-gray-200">
             <?= $list->full_name ?>
           </td>
@@ -96,7 +120,7 @@ require_once '../vues/nav.php';
             <?= $list->DateReservation ?>
           </td>
           <td class="p-4 text-sm text-gray-700 border-b border-gray-200">
-            efd
+          <?= $list->Specialite?>
           </td>
           <td class="p-4 border-b border-gray-200">
             <div class="flex space-x-2">

@@ -58,38 +58,38 @@ require_once '../vues/nav.php';
   </div>
 </section>
 
-
-<section>
-
-
-  <div class="p-4 my-[280px]" id="reserv">
-    <div class="max-w-6xl max-lg:max-w-3xl max-sm:max-w-sm mx-auto">
-      <div class="max-w-md mx-auto text-center">
-        <i class="icofont-law text-[#CA965C] font-bold ">⚖️ AVOCAT MAROC</i>
-        <h2 class="text-3xl font-extrabold text-gray-800 mb-12 text-center leading-10">Dans toutes les spécialités</h2>
+<section class="py-12 bg-gray-100">
+  <div class="p-4 my-[80px]" id="reserv">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <i class="icofont-law text-[#CA965C] font-bold text-4xl">⚖️</i>
+        <h2 class="text-3xl font-extrabold text-gray-800 leading-tight mt-4">AVOCAT MAROC</h2>
+        <p class="text-lg text-gray-600 mt-2">Dans toutes les spécialités</p>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-sm:gap-8">
-
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php foreach ($ListAvocat as $list) :
-          if ($list->roles == 0) {
-
-
-        ?>
-            <div class="bg-white rounded overflow-hidden">
-              <img src="<?= $list->img ?>" alt="Blog Post 1" class="w-full h-52 object-cover" />
+          if ($list->roles == 0) { ?>
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden transition transform hover:scale-105 duration-300 ease-in-out">
+              <img src="<?= $list->img ?>" alt="Blog Post 1" class="w-full h-52 object-cover rounded-t-lg" />
               <div class="p-6">
-                <h3 class="text-lg font-bold text-[#CA965C] mb-3"><?= $list->full_name ?></h3>
-                <p class="text-gray-500 text-sm"><?= $list->label ?></p>
+                <h3 class="text-lg font-semibold text-[#CA965C] mb-3"><?= $list->full_name ?></h3>
+                <p class="text-gray-500 text-sm mb-4"><?= $list->label ?></p>
                 <p class="text-gray-800 text-[13px] font-semibold mt-4">Disponible</p>
-                <a onclick='showEditModal()' href="../vues/home_reservation.php?id=<?= $list->id ?>" class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px]">Reserv</a>
+                <a href="../vues/home_reservation.php?id=<?= $list->id ?>" 
+                   onclick='showEditModal()' 
+                   class="mt-4 inline-block px-6 py-2 rounded-lg bg-purple-600 text-white text-[13px] font-semibold tracking-wider transition-all duration-300 ease-in-out transform hover:bg-purple-700 hover:scale-105">
+                  Réserver
+                </a>
               </div>
             </div>
         <?php   }
         endforeach; ?>
-
       </div>
-      <div>
+    </div>
+  </div>
 </section>
+
 <section>
 
 

@@ -34,17 +34,15 @@ if (isset($_GET['id'])) {
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-
-    $sqlusers = $pdo->prepare("INSERT INTO resvations (idClient, DateReservation,idAvocat) VALUES (?, ?,?)");
+    $sqlusers = $pdo->prepare("INSERT INTO resvations (idClient, DateReservation,idAvocat,Specialite) VALUES (?, ?,?,?)");
     $name = $_SESSION["id"];
     $idAvocat = $id = $_GET['id'];
     $stmt->bindParam(':date', $date, PDO::PARAM_STR);
-    $sqlusers->execute([$name, $_POST['label'], $idAvocat]);
-
+    $sqlusers->execute([$name, $_POST['label'], $idAvocat,$_POST['Specialite']]);
     if ($sqlusers) {
         //  header("location:../vues/login.php");
     }
+   
 }
 include "../vues/nav.php";
 
@@ -101,8 +99,8 @@ include "../vues/nav.php";
                                 <button id="closeModal" class="modal-close px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring">✕</button>
                             </div>
                             <div class="mb-6">
-                                <select id="eventTitle" class="w-full rounded-md border bg-white py-3 px-4 outline-none ring-yellow-500 focus:ring-2 text-lg" name="speciality" required>
-                                    <option value="<?= $user['label'] ?>"><?= $user['label'] ?></option>
+                                <select id="eventTitle" class="w-full rounded-md border bg-white py-3 px-4 outline-none ring-yellow-500 focus:ring-2 text-lg" name="Specialite" required>
+                                    <option value="<?= $user['label'] ?>"><?= $user['label']  ?></option>
                                 </select>
                             </div>
                             <div class="mb-6">
